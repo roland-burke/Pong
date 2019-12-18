@@ -43,7 +43,8 @@ public final class Game{
 		leftBar = new Bar(leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
 		rightBar = new Bar(rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
 		ball = new Ball();
-		dp = new DrawPanel(ball, leftBar, rightBar);
+		score = new ScoreBoard();
+		dp = new DrawPanel(ball, leftBar, rightBar, score);
 		frame.add(dp);
 		ball.resetDirectionAndPosition();
 		
@@ -61,7 +62,6 @@ public final class Game{
 			Drop drop = new Drop(xPos, yPos, 4 + grav * 7, 50, speed, grav, colorR, colorG, colorB);
 			drops[i] = drop;
 		}
-		score = new ScoreBoard(dp, drops);
 	}
 	
 	private void run() {
@@ -125,6 +125,7 @@ public final class Game{
 		ball.resetDirectionAndPosition();
 		score.reset();
 		celeb = false;
+		dp.setCelebration(false);
 	}
 	
 	public void moveBars() {

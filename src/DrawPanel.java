@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 public final class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
+	private Ball ball;
+	private Bar leftBar;
+	private Bar rightBar;
+	private ScoreBoard scoreboard;
+	
 	private int panelWidth = getWidth(); // *1349* weil der Frame 6 pxl breiter ist als das Panel
 	private int panelHeight = getHeight(); // *954* weil der Frame 46 pxl hoeher ist als das Panel
 	
@@ -16,18 +21,14 @@ public final class DrawPanel extends JPanel {
 	
 	private boolean celebration;
 	
-	private String score = "0 : 0";
 	private String winner = "";
 	private String info = "";
 	
-	private Ball ball;
-	private Bar leftBar;
-	private Bar rightBar;
 	
 	private Drop[] drops;
 
 
-	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar) {
+	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard scoreBoard) {
 		//xPosLeftBar = 40; //40
 		//yPosLeftBar = (panelHeight / 2) - (leftBarHeight / 2); // +46 weil der Frame 46 pxl hoeher ist als das Panel
 		//xPosRightBar = panelWidth - xPosLeftBar - rightBarWidth; // -6 weil der Frame 6 pxl breiter ist als das Panel
@@ -35,6 +36,7 @@ public final class DrawPanel extends JPanel {
 		this.ball = ball;
 		this.leftBar = leftBar;
 		this.rightBar = rightBar;
+		this.scoreboard = scoreBoard;
 	}
 	
 	@Override
@@ -45,8 +47,8 @@ public final class DrawPanel extends JPanel {
 		
 		g.setColor(new Color(180, 180, 180)); // grau
 		g.setFont(new Font("Arial", Font.PLAIN, 30));
-		g.drawString("Spieler 1", 100, 30); // Spieler1
-		g.drawString("Spieler 2", 1180, 30); // Spieler2
+		g.drawString(scoreboard.getP1(), 100, 30); // Spieler1
+		g.drawString(scoreboard.getP2(), 1180, 30); // Spieler2
 		
 		g.setColor(new Color(200, 21, 0)); // rot
 		g.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // Linker Balken
@@ -56,7 +58,7 @@ public final class DrawPanel extends JPanel {
 		g.fillOval((int) ball.getXPos(), (int) ball.getYPos(), 40, 40); // Ball
 		
 		g.setFont(new Font("Arial", Font.PLAIN, 45));
-		g.drawString(score, 650, 50); // ScoreBoard
+		g.drawString(scoreboard.getScoreBoard(), 650, 50); // ScoreBoard
 		
 		g.setColor(new Color(180, 255, 0)); // gruen
 		g.setFont(new Font("Arial", Font.PLAIN, 100));
@@ -72,6 +74,14 @@ public final class DrawPanel extends JPanel {
 				g.fillRect(drop.xPos, drop.yPos, (int) drop.width, drop.height);
 			}
 		}
+		
+		if(scoreboard.checkForWinner()) {
+			setWinner(scoreboard.getWinningPlayer());
+		} else {
+			setWinner("");
+		}
+		
+		
 	}
 	
 	/*
@@ -79,12 +89,8 @@ public final class DrawPanel extends JPanel {
 	 * #######################################################################################################################
 	 */
 	
-	public void setScore(String score) {
-		this.score = score;
-	}
-	
 	public void setWinner(String winner) {
-		this.winner = winner;
+		this.winner = winner + " hat gewonnen!";
 		this.winnerX = 160;
 		this.winnerY = 300;
 		if(winner.isEmpty()) {
