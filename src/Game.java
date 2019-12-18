@@ -40,11 +40,11 @@ public final class Game{
 	}
 
 	private void init() {
-		dp = new DrawPanel();
+		leftBar = new Bar(leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
+		rightBar = new Bar(rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
+		ball = new Ball();
+		dp = new DrawPanel(ball, leftBar, rightBar);
 		frame.add(dp);
-		leftBar = new Bar(0, dp, leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
-		rightBar = new Bar(1, dp, rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
-		ball = new Ball(dp);
 		ball.resetDirectionAndPosition();
 		
 		int nDrops;

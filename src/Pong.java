@@ -4,7 +4,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-public final class Main {
+public final class Pong {
 
 	private static JFrame frame;
 	public static int frameHeight = 1000;

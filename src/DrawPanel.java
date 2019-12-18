@@ -8,21 +8,8 @@ import javax.swing.JPanel;
 public final class DrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	private int leftBarWidth = 20;
-	private int leftBarHeight = 140;
-	private int rightBarWidth = 20;
-	private int rightBarHeight = 140;
-	
 	private int panelWidth = getWidth(); // *1349* weil der Frame 6 pxl breiter ist als das Panel
 	private int panelHeight = getHeight(); // *954* weil der Frame 46 pxl hoeher ist als das Panel
-	
-	private int xPosLeftBar;
-	private int yPosLeftBar = (954 / 2) - (leftBarHeight / 2);; 
-	private int xPosRightBar;
-	private int yPosRightBar = (954 / 2) - (rightBarHeight / 2);;
-	
-	private int xPosBall;
-	private int yPosBall;
 	
 	private int winnerX = 1500;
 	private int winnerY = 1500;
@@ -33,16 +20,21 @@ public final class DrawPanel extends JPanel {
 	private String winner = "";
 	private String info = "";
 	
+	private Ball ball;
+	private Bar leftBar;
+	private Bar rightBar;
+	
 	private Drop[] drops;
 
 
-	public DrawPanel() {
+	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar) {
 		//xPosLeftBar = 40; //40
 		//yPosLeftBar = (panelHeight / 2) - (leftBarHeight / 2); // +46 weil der Frame 46 pxl hoeher ist als das Panel
 		//xPosRightBar = panelWidth - xPosLeftBar - rightBarWidth; // -6 weil der Frame 6 pxl breiter ist als das Panel
 		//yPosRightBar = (panelHeight / 2) - (rightBarHeight / 2);
-		xPosBall = Main.frameWidth / 2 - 20;
-		yPosBall = Main.frameHeight / 2 - 20;
+		this.ball = ball;
+		this.leftBar = leftBar;
+		this.rightBar = rightBar;
 	}
 	
 	@Override
@@ -57,11 +49,11 @@ public final class DrawPanel extends JPanel {
 		g.drawString("Spieler 2", 1180, 30); // Spieler2
 		
 		g.setColor(new Color(200, 21, 0)); // rot
-		g.fillRect(xPosLeftBar, yPosLeftBar, leftBarWidth, leftBarHeight); // Linker Balken
-		g.fillRect(xPosRightBar, yPosRightBar, rightBarWidth, rightBarHeight); // Rechter Balken
+		g.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // Linker Balken
+		g.fillRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // Rechter Balken
 		
 		g.setColor(new Color(180, 180, 180)); // grau
-		g.fillOval(xPosBall, yPosBall, 40, 40); // Ball
+		g.fillOval((int) ball.getXPos(), (int) ball.getYPos(), 40, 40); // Ball
 		
 		g.setFont(new Font("Arial", Font.PLAIN, 45));
 		g.drawString(score, 650, 50); // ScoreBoard
@@ -87,32 +79,6 @@ public final class DrawPanel extends JPanel {
 	 * #######################################################################################################################
 	 */
 	
-	public void setyPos(int yPos, int checkWhichBar) {
-		if(checkWhichBar == 0) {
-			this.yPosLeftBar = yPos;
-		}
-		if (checkWhichBar == 1) {
-			this.yPosRightBar = yPos;
-		}
-	}
-	
-	public void setxPos(int xPos, int checkWhichBar) {
-		if(checkWhichBar == 0) {
-			this.xPosLeftBar = xPos;
-		}
-		if (checkWhichBar == 1) {
-			this.xPosRightBar = xPos;
-		}
-	}
-	
-	public void setxPosBall(double xPos) {
-		this.xPosBall = (int) xPos;
-	}
-	
-	public void setyPosBall(double yPos) {
-		this.yPosBall = (int) yPos;
-	}
-	
 	public void setScore(String score) {
 		this.score = score;
 	}
@@ -129,16 +95,6 @@ public final class DrawPanel extends JPanel {
 	
 	public void setInfo(String info) {
 		this.info = info;
-	}
-	
-	public void setBarWidthHeight(int width, int height, int checkWhichBar) {
-		if(checkWhichBar == 0) {
-			this.leftBarWidth = width;
-			this.leftBarHeight = height;
-		} else if(checkWhichBar == 1) {
-			this.rightBarWidth = width;
-			this.rightBarHeight = height;
-		}
 	}
 	
 	public void setCelebration(boolean bool, Drop[] drops) {

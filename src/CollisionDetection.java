@@ -15,41 +15,41 @@ public class CollisionDetection {
 	public static void calculate() {
 		// left side
 		if (ballHitBox[0][0] <= leftBarHitBox[0][1] && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + 20 > leftBarHitBox[1][0] && ballHitBox[1][0] + 20 < leftBarHitBox[1][1] && left) {
-			left();
+			changeDirectionLeftCollision();
 		}
 		// right side
 		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] && ballHitBox[1][0] + 20 > rightBarHitBox[1][0] && ballHitBox[1][0] + 20 < rightBarHitBox[1][1] && right) {
-			right();
+			changeDirectionRightCollision();
 		}
 		// top
 		if (ballHitBox[1][0] < 0 && top) {
-			top();
+			changeDirectionTopCollision();
 		}
 		// bottom
 		if (ballHitBox[1][1] > 954 && bottom) {
-			bottom();
+			changeDirectionBottomCollision();
 		}
 	}
 
-	public static void left() {
+	public static void changeDirectionLeftCollision() {
 		directionVector[0][0] = directionVector[0][0] * -1;
 		left = false;
 		right = top = bottom = true;
 	}
 
-	public static void right() {
+	public static void changeDirectionRightCollision() {
 		directionVector[0][0] = directionVector[0][0] * -1;
 		right = false;
 		left = top = bottom = true;
 	}
 
-	public static void top() {
+	public static void changeDirectionTopCollision() {
 		directionVector[1][0] = directionVector[1][0] * -1;
 		top = false;
 		left = right = bottom = true;
 	}
 
-	public static void bottom() {
+	public static void changeDirectionBottomCollision() {
 		directionVector[1][0] = directionVector[1][0] * -1;
 		bottom = false;
 		left = right = top = true;
@@ -72,7 +72,7 @@ public class CollisionDetection {
 	}
 	
 	public static void changeAngle1() {
-		int angle = 1;
+		int angle = 0;
 		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
 				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);

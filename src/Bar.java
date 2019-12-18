@@ -1,23 +1,17 @@
 
 public final class Bar {
-	DrawPanel dp;
 	
-	private int width;
-	private int height;
-	private int xPos;
-	private int yPos;
+	private int width = 20;
+	private int height = 140;
+	private double xPos;
+	private double yPos = (954 / 2) - (height / 2);
 	
 	private int speed = 18;
-	private int checkWhichBar;
 
 	private double[][] hitBox = { {xPos, xPos + width},
 							   {yPos, yPos + height} };
 
-	public Bar(int bar, DrawPanel dp, int xPos, int yPos, int width, int height) {
-		this.dp = dp;
-		this.dp.setBarWidthHeight(width, height, checkWhichBar);
-		this.dp.setxPos(xPos, bar);
-		this.checkWhichBar = bar;
+	public Bar(int xPos, int yPos, int width, int height) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.width = width;
@@ -28,14 +22,12 @@ public final class Bar {
 		if (yPos > 0) {
 			yPos -= speed;
 		}
-		dp.setyPos(yPos, checkWhichBar);
 	}
 
 	public void moveDown() {
 		if (yPos < 814) {
 			yPos += speed;
 		}
-		dp.setyPos(yPos, checkWhichBar);
 	}
 	
 	public double[][] getHitBox() {
@@ -44,5 +36,21 @@ public final class Bar {
 		hitBox[1][0] = yPos;
 		hitBox[1][1] = yPos + height;
 		return hitBox;
+	}
+	
+	public double getXPos() {
+		return this.xPos;
+	}
+	
+	public double getYPos() {
+		return this.yPos;
+	}
+	
+	public double getWidth() {
+		return this.width;
+	}
+	
+	public double getHeight() {
+		return this.height;
 	}
 }
