@@ -1,4 +1,4 @@
 # Pong
-Controls:
-Player1: W, S
+Controls:<br/>
+Player1: W, S<br/>
 Player2: UP, DOWN
