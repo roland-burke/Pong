@@ -25,7 +25,7 @@ public final class Bar {
 	}
 
 	public void moveDown() {
-		if (yPos < 82) {
+		if (yPos < 825) {
 			yPos += speed;
 		}
 	}

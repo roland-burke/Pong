@@ -68,6 +68,7 @@ public final class DrawPanel extends JPanel {
 		drawScoreBoard(g2d);
 		drawWinner(g2d);
 		drawFPS(g2d);
+		
 	}
 	
 	private void drawMiddleLine(Graphics2D g2d) {

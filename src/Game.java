@@ -29,8 +29,8 @@ public final class Game{
 	private final int rightBarInitX = 1394 - leftBarInitX - rightBarInitWidth;
 	private final int rightBarInitY = (954 / 2) - (rightBarInitHeight / 2); // (dp.getPanelHeight() / 2) - (rightBarInitHeight / 2)
 	
-	private final int ballXPos = frame.getWidth() / 2 - 20;
-	private final int ballYPos = frame.getHeight() / 2 - 20;
+	private int ballXPos;
+	private int ballYPos;
 	private final int ballRadius = 40;
 	
 	
@@ -50,6 +50,9 @@ public final class Game{
 	}
 
 	private void init() {
+		ballXPos = frame.getWidth() / 2 - 20;
+		ballYPos = frame.getHeight() / 2 - 20;
+		
 		leftBar = new Bar(leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
 		rightBar = new Bar(rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
 		ball = new Ball(ballXPos, ballYPos, ballRadius);
