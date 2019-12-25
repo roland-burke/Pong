@@ -16,7 +16,6 @@ public final class Pong {
 		openGameFrame();
 		game = new Game(frame);
 		game.start();
-		// wenn menu Fenster revalidate();
 	}
 
 	public static void openGameFrame() {
@@ -88,8 +87,6 @@ public final class Pong {
 				}
 			}
 		});
-		frame.repaint();
-		frame.setVisible(true);
 	}
 }
 

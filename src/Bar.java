@@ -6,7 +6,7 @@ public final class Bar {
 	private double xPos;
 	private double yPos = (954 / 2) - (height / 2);
 	
-	private int speed = 18;
+	private int speed = 15;
 
 	private double[][] hitBox = { {xPos, xPos + width},
 							   {yPos, yPos + height} };
@@ -19,13 +19,13 @@ public final class Bar {
 	}
 
 	public void moveUp() {
-		if (yPos > 0) {
+		if (yPos > 1) {
 			yPos -= speed;
 		}
 	}
 
 	public void moveDown() {
-		if (yPos < 814) {
+		if (yPos < 828) {
 			yPos += speed;
 		}
 	}

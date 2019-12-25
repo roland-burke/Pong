@@ -1,4 +1,4 @@
-
+import java.util.Random;
 
 public class CollisionDetection {
 	private static double[][] leftBarHitBox = new double[2][2];
@@ -11,6 +11,8 @@ public class CollisionDetection {
 	private static boolean bottom = true;
 	private static boolean left = true;
 	private static boolean right = true;
+	
+	private static Random r = new Random();
 
 	public static void calculate() {
 		// left side
@@ -35,12 +37,16 @@ public class CollisionDetection {
 		directionVector[0][0] = directionVector[0][0] * -1;
 		left = false;
 		right = top = bottom = true;
+		int randomInt = r.nextInt() % 15;
+		changeAngle1(randomInt);
 	}
 
 	public static void changeDirectionRightCollision() {
 		directionVector[0][0] = directionVector[0][0] * -1;
 		right = false;
 		left = top = bottom = true;
+		int randomInt = r.nextInt() % 15;
+		changeAngle1(randomInt);
 	}
 
 	public static void changeDirectionTopCollision() {
@@ -59,7 +65,6 @@ public class CollisionDetection {
 		leftBarHitBox = thatleftBarHitBox;
 		rightBarHitBox = thatrightBarHitBox;
 		ballHitBox = thatballHitBox;
-		changeAngle1();
 	}
 
 	
@@ -71,18 +76,11 @@ public class CollisionDetection {
 		directionVector = dirVec;
 	}
 	
-	public static void changeAngle1() {
-		int angle = 0;
+	public static void changeAngle1(int angle) {
 		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
 				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
-	}
-	
-	public static void changeAngle2() {
-		int angle = 340;
-		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
-				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
-		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
+		angle = 0;
 	}
 	
 	public static void resetCollisionConditions() {

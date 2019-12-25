@@ -34,6 +34,16 @@ public final class Game{
 	private Drop[] drops;
 	private boolean celeb;
 	
+	public int counter = 0;
+	public double startTimeCalcFPS = System.nanoTime();
+	
+	private final int FRAME_CAP = 120;
+	private int fps = 0;
+	private final int NANO_SECOND = 1000000000;
+	private int rate = NANO_SECOND / FRAME_CAP;
+	private int milliSleep = rate / 1000000;
+	private int nanoSleep = rate - (milliSleep * 1000000);
+	
 	public Game(JFrame frame) {
 		this.frame = frame;
 		init();
@@ -62,6 +72,7 @@ public final class Game{
 			Drop drop = new Drop(xPos, yPos, 4 + grav * 7, 50, speed, grav, colorR, colorG, colorB);
 			drops[i] = drop;
 		}
+		frame.setVisible(true);
 	}
 	
 	private void run() {
@@ -75,13 +86,19 @@ public final class Game{
 					drop.move();
 				}
 			}
+			if(isF3Pressed) {
+				dp.setInfo("FPS: " + Integer.toString(fps));
+			} else {
+				dp.setInfo("");
+			}
 			tick();
 			render();
 			try {
-				Thread.sleep(8);
+				Thread.sleep(milliSleep, nanoSleep);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			calculateFPS();
 		}
 	}
 	
@@ -120,6 +137,14 @@ public final class Game{
 		frame.repaint();
 	}
 	
+	public void calculateFPS() {
+		counter += 1;
+		if(System.nanoTime() - startTimeCalcFPS >= NANO_SECOND) {
+			fps = counter;
+			counter = 0;
+			startTimeCalcFPS = System.nanoTime();
+		}
+	}
 	
 	private void reset() {
 		ball.resetDirectionAndPosition();

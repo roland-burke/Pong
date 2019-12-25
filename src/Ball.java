@@ -33,8 +33,8 @@ public final class Ball {
 	
 	public void resetDirectionAndPosition() {
 		// Ball in der Mitte platzieren
-		xPos = Pong.frameWidth / 2 - 20;
-		yPos = Pong.frameHeight / 2 - 20;
+		xPos = Pong.frameWidth / 2 - 22;
+		yPos = Pong.frameHeight / 2 - 22;
 		
 		// Zufaelligen Winkel erstellen
 		double angle;

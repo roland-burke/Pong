@@ -51,7 +51,7 @@ public final class ScoreBoard {
 	}
 	
 	public String getScoreBoard() {
-		return score1 + " : " + score2;
+		return score1 + "  " + score2;
 	}
 
 	public String getP1() {
