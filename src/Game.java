@@ -1,6 +1,4 @@
 
-import java.util.concurrent.ThreadLocalRandom;
-
 import javax.swing.JFrame;
 
 public final class Game{
@@ -31,8 +29,6 @@ public final class Game{
 	private final int rightBarInitX = 1394 - leftBarInitX - rightBarInitWidth;
 	private final int rightBarInitY = (954 / 2) - (rightBarInitHeight / 2); // (dp.getPanelHeight() / 2) - (rightBarInitHeight / 2)
 	
-	private Drop[] drops;
-	private boolean celeb;
 	
 	public int counter = 0;
 	public double startTimeCalcFPS = System.nanoTime();
@@ -58,30 +54,11 @@ public final class Game{
 		frame.add(dp);
 		ball.resetDirectionAndPosition();
 		
-		int nDrops;
-		nDrops = ThreadLocalRandom.current().nextInt(200, 250 + 1);
-		drops = new Drop[nDrops];
-		for(int i = 0; i < nDrops; ++i) {
-			int colorR = ThreadLocalRandom.current().nextInt(0, 255); // 0, 80
-			int colorG = ThreadLocalRandom.current().nextInt(0, 255); // 0, 100
-			int colorB = ThreadLocalRandom.current().nextInt(0, 255); // 190, 255
-			int yPos = ThreadLocalRandom.current().nextInt(-550, -450); // -550 -450
-			int xPos = ThreadLocalRandom.current().nextInt(0, 1500);
-			double speed = ThreadLocalRandom.current().nextDouble(0.1, 1.0);
-			double grav = ThreadLocalRandom.current().nextDouble(0.1, 0.5);
-			Drop drop = new Drop(xPos, yPos, 4 + grav * 7, 50, speed, grav, colorR, colorG, colorB);
-			drops[i] = drop;
-		}
 		frame.setVisible(true);
 	}
 	
 	private void run() {
 		while(running) {
-			if(celeb) {
-				for(Drop drop : drops) {
-					drop.move();
-				}
-			}
 			if(isF3Pressed) {
 				dp.setInfo("FPS: " + Integer.toString(fps));
 			} else {
@@ -118,8 +95,6 @@ public final class Game{
 		
 		if(score.checkForWinner()) {
 			ball.resetDirectionAndPositionAndSpeed();
-			celeb = true;
-			dp.setCelebration(true, drops);
 		}
 		
 		moveBars();
@@ -146,8 +121,6 @@ public final class Game{
 	private void reset() {
 		ball.resetDirectionAndPosition();
 		score.reset();
-		celeb = false;
-		dp.setCelebration(false);
 	}
 	
 	public void moveBars() {

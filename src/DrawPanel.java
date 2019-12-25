@@ -22,13 +22,8 @@ public final class DrawPanel extends JPanel {
 	private int winnerX = 1500;
 	private int winnerY = 1500;
 	
-	private boolean celebration;
-	
 	private String winner = "";
 	private String info = "";
-	
-	
-	private Drop[] drops;
 
 
 	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard scoreBoard) {
@@ -72,13 +67,7 @@ public final class DrawPanel extends JPanel {
 		g2d.setColor(Color.WHITE); // weiﬂ
 		g2d.setFont(new Font("Arial", Font.PLAIN, 20));
 		g2d.drawString(info, 1250, 950); // FPS
-		
-		if(celebration) {
-			for(Drop drop : drops) {
-				g2d.setColor(drop.color);
-				g2d.fillRect(drop.xPos, drop.yPos, (int) drop.width, drop.height);
-			}
-		}
+
 		
 		if(scoreboard.checkForWinner()) {
 			setWinner(scoreboard.getWinningPlayer());
@@ -104,15 +93,6 @@ public final class DrawPanel extends JPanel {
 	
 	public void setInfo(String info) {
 		this.info = info;
-	}
-	
-	public void setCelebration(boolean bool, Drop[] drops) {
-		celebration = bool;
-		this.drops = drops;
-	}
-	
-	public void setCelebration(boolean bool) {
-		celebration = bool;
 	}
 }
 

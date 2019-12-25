@@ -13,17 +13,17 @@ public final class Pong {
 	private static boolean ppressed = false;
 	
 	public static void main(String[] args) {
-		openGameFrame();
+		createGameFrame();
 		game = new Game(frame);
 		game.start();
 	}
 
-	public static void openGameFrame() {
+	public static void createGameFrame() {
 		frame = new JFrame("Pong");
 		frame.setSize(frameWidth, frameHeight);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
-		frame.setResizable(false);
+		//frame.setResizable(false);
 		frame.addKeyListener(new KeyListener() {
 			@Override
 			public void keyTyped(KeyEvent e) {
