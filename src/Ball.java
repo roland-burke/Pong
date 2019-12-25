@@ -3,6 +3,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class Ball {
 	private Random r = new Random();
+	private int randomFactor = 16;
 	private double defaultXPos;
 	private double defaultYPos;
 	private double xPos;
@@ -39,12 +40,10 @@ public final class Ball {
 		
 		// Generate random angle
 		double angle;
-		if(ballHitBox[0][0] < -40) {
-			angle = getRandomAngle(-40, 40, 8, -8);
-		} else if (ballHitBox[0][0] > 1400) {
-			angle = getRandomAngle(140, 220, 188, 172);
+		if(ballHitBox[0][0] > 1400) {
+			angle = getRandomAngle(140, 220);
 		} else {
-			angle = getRandomAngle(-40, 40, 8, -8);
+			angle = getRandomAngle(-40, 40);
 		}
 		
 		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
@@ -63,20 +62,13 @@ public final class Ball {
 		return ballHitBox;
 	}
 	
-	private double getRandomAngle(int min, int max, int min2, int max2) {
-//		double angle = ThreadLocalRandom.current().nextInt(min, max);
-//		System.out.println("angle1: " + angle);
-//		while(angle < min2 && angle > max2) {
-//			angle = ThreadLocalRandom.current().nextInt(min, max);
-//		}
-//		System.out.println("angle2: " + angle + "\n");
-//		return angle;
-		return ThreadLocalRandom.current().nextInt(min2, max2);
+	private double getRandomAngle(int min, int max) {
+		return ThreadLocalRandom.current().nextInt(min, max);
 	}
 	
 	public void changeDirectionVectorX() {
 		this.directionVector[0][0] *= -1;
-		int randomInt = r.nextInt() % 15;
+		int randomInt = r.nextInt() % randomFactor;
 		changeAngle(randomInt);
 	}
 	
