@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
@@ -24,7 +25,20 @@ public final class DrawPanel extends JPanel {
 	
 	private String winner = "";
 	private String info = "";
-
+	
+	private final Color BAR_COLOR = new Color(200, 21, 0); // red
+	private final Color BALL_COLOR = new Color(180, 180, 180); // gray
+	private final Color PLAYER_COLOR = new Color(180, 180, 180); // gray
+	private final Color WINNER_COLOR = new Color(180, 255, 0); // green
+	private final Color BACK_COLOR = new Color(50, 50, 120); // darkblue
+	
+	private final Font SCORE_FONT = new Font("Arial", Font.PLAIN, 45);
+	private final Font WINNER_FONT = new Font("Arial", Font.PLAIN, 100);
+	private final Font FPS_FONT = new Font("Arial", Font.PLAIN, 20);
+	private final Font PLAYER_FONT = new Font("Arial", Font.PLAIN, 30);
+	
+	private final Stroke MIDDLELINE_STROKE = new BasicStroke(2);
+	
 
 	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard scoreBoard) {
 		this.ball = ball;
@@ -37,43 +51,64 @@ public final class DrawPanel extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		FontMetrics metrics = g2d.getFontMetrics(new Font("Arial", Font.PLAIN, 45));
+		
 		g2d.translate(panelWidth / 2, panelHeight / 2);
-		setBackground(new Color(50, 50, 120)); // dunkelblau
+		setBackground(BACK_COLOR);
 		
-		g2d.setColor(Color.WHITE);
-		g2d.setStroke(new BasicStroke(2));
-		g2d.drawLine((int) getWidth() / 2, 0, getWidth() / 2, getHeight());
-		
-		g2d.setColor(new Color(180, 180, 180)); // grau
-		g2d.setFont(new Font("Arial", Font.PLAIN, 30));
-		g2d.drawString(scoreboard.getP1(), 100, 30); // Spieler1
-		g2d.drawString(scoreboard.getP2(), 1180, 30); // Spieler2
-		
-		g2d.setColor(new Color(200, 21, 0)); // rot
-		g2d.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // Linker Balken
-		g2d.fillRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // Rechter Balken
-		
-		g2d.setColor(new Color(180, 180, 180)); // grau
-		g2d.fillOval((int) ball.getXPos(), (int) ball.getYPos(), 40, 40); // Ball
-		
-		g2d.setFont(new Font("Arial", Font.PLAIN, 45));
-		g2d.drawString(scoreboard.getScoreBoard(), (getWidth() / 2) - (metrics.stringWidth(scoreboard.getScoreBoard()) / 2), 50); // ScoreBoard
-		
-		g2d.setColor(new Color(180, 255, 0)); // gruen
-		g2d.setFont(new Font("Arial", Font.PLAIN, 100));
-		g2d.drawString(winner, winnerX, winnerY); // Gewinner
-		
-		g2d.setColor(Color.WHITE); // weiﬂ
-		g2d.setFont(new Font("Arial", Font.PLAIN, 20));
-		g2d.drawString(info, 1250, 950); // FPS
-
+		drawMiddleLine(g2d);
+		drawPlayerNames(g2d);
+		drawBars(g2d);
+		drawBall(g2d);
+		drawScoreBoard(g2d);
+		drawWinner(g2d);
+		drawFPS(g2d);
 		
 		if(scoreboard.checkForWinner()) {
 			setWinner(scoreboard.getWinningPlayer());
 		} else {
 			setWinner("");
 		}
+	}
+	
+	private void drawMiddleLine(Graphics2D g2d) {
+		g2d.setColor(Color.WHITE);
+		g2d.setStroke(MIDDLELINE_STROKE);
+		g2d.drawLine((int) getWidth() / 2, 0, getWidth() / 2, getHeight());
+	}
+	
+	private void drawPlayerNames(Graphics2D g2d) {
+		drawString(g2d, scoreboard.getP1(), 100, 30, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getP2(), 1180, 30, PLAYER_COLOR, PLAYER_FONT);
+	}
+	
+	private void drawBars(Graphics2D g2d) {
+		g2d.setColor(BAR_COLOR);
+		g2d.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // left bar
+		g2d.fillRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // right bar
+	}
+	
+	private void drawBall(Graphics2D g2d) {
+		g2d.setColor(BALL_COLOR);
+		g2d.fillOval((int) ball.getXPos(), (int) ball.getYPos(), 40, 40); // Ball
+	}
+	
+	private void drawScoreBoard(Graphics2D g2d) {
+		FontMetrics metrics = g2d.getFontMetrics(SCORE_FONT);
+		drawString(g2d, scoreboard.getScoreBoard(), (getWidth() / 2) - (metrics.stringWidth(scoreboard.getScoreBoard()) / 2), 50, PLAYER_COLOR, SCORE_FONT);
+	}
+	
+	private void drawWinner(Graphics2D g2d) {
+		drawString(g2d, scoreboard.getWinningPlayer(), winnerX, winnerY, WINNER_COLOR, WINNER_FONT);
+	}
+	
+	private void drawFPS(Graphics2D g2d) {
+		drawString(g2d, info, 1250, 950, Color.WHITE, FPS_FONT);
+	}
+	
+	private void drawString(Graphics2D g2d, String text, int xPos, int yPos, Color color, Font font) {
+		g2d.setColor(color);
+		g2d.setFont(font);
+		g2d.drawString(text, xPos, yPos);
 	}
 	
 	/*
