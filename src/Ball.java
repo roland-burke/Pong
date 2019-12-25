@@ -1,17 +1,23 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Ball {
-	private double defaultXPos = Pong.frameWidth / 2 - 20;
-	private double defaultYPOS = Pong.frameHeight / 2 - 20;
-	private double xPos = defaultXPos;
-	private double yPos = defaultYPOS;
-	private double radius = 40;
+	private double defaultXPos;
+	private double defaultYPos;
+	private double xPos;
+	private double yPos;
+	private double radius;
 	private double speed = 10;
 	private double[][] directionVector = new double[2][1];
 	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 	
 	private double[][] ballHitBox = { {xPos, xPos + radius},
 			{yPos, yPos + radius} };
+	
+	public Ball(int xPos, int yPos, int radius) {
+		this.xPos = this.defaultXPos = xPos;
+		this.yPos = this.defaultYPos = yPos;
+		this.radius = radius;
+	}
 
 	public void move() {
 		ballHitBox[0][0] = xPos;
@@ -28,7 +34,7 @@ public final class Ball {
 	public void resetDirectionAndPosition() {
 		// Place Ball in center
 		xPos = defaultXPos;
-		yPos = defaultYPOS;
+		yPos = defaultYPos;
 		
 		// Generate random angle
 		double angle;
