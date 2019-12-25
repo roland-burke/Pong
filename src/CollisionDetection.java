@@ -1,86 +1,58 @@
 import java.util.Random;
 
 public class CollisionDetection {
-	private static double[][] leftBarHitBox = new double[2][2];
-	private static double[][] rightBarHitBox = new double[2][2];
-	private static double[][] ballHitBox = new double[2][2];
-
 	private static double[][] directionVector = new double[2][1];
 
 	private static boolean top = true;
 	private static boolean bottom = true;
 	private static boolean left = true;
 	private static boolean right = true;
-	
-	private static Random r = new Random();
 
-	public static void calculate() {
+	public static void calculate(Ball ball, Bar leftBar, Bar rightBar) {
+		double[][] leftBarHitBox = leftBar.getHitBox();
+		double[][] rightBarHitBox = rightBar.getHitBox();
+		double[][] ballHitBox = ball.getHitBox();
+		
 		// left side
 		if (ballHitBox[0][0] <= leftBarHitBox[0][1] && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + 20 > leftBarHitBox[1][0] && ballHitBox[1][0] + 20 < leftBarHitBox[1][1] && left) {
-			changeDirectionLeftCollision();
+			changeDirectionLeftCollision(ball);
 		}
 		// right side
 		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] && ballHitBox[1][0] + 20 > rightBarHitBox[1][0] && ballHitBox[1][0] + 20 < rightBarHitBox[1][1] && right) {
-			changeDirectionRightCollision();
+			changeDirectionRightCollision(ball);
 		}
 		// top
 		if (ballHitBox[1][0] < 0 && top) {
-			changeDirectionTopCollision();
+			changeDirectionTopCollision(ball);
 		}
 		// bottom
 		if (ballHitBox[1][1] > 954 && bottom) {
-			changeDirectionBottomCollision();
+			changeDirectionBottomCollision(ball);
 		}
 	}
 
-	public static void changeDirectionLeftCollision() {
-		directionVector[0][0] = directionVector[0][0] * -1;
+	private static void changeDirectionLeftCollision(Ball ball) {
+		ball.changeDirectionVectorX();
 		left = false;
 		right = top = bottom = true;
-		int randomInt = r.nextInt() % 15;
-		changeAngle1(randomInt);
 	}
 
-	public static void changeDirectionRightCollision() {
-		directionVector[0][0] = directionVector[0][0] * -1;
+	private static void changeDirectionRightCollision(Ball ball) {
+		ball.changeDirectionVectorX();
 		right = false;
 		left = top = bottom = true;
-		int randomInt = r.nextInt() % 15;
-		changeAngle1(randomInt);
 	}
 
-	public static void changeDirectionTopCollision() {
-		directionVector[1][0] = directionVector[1][0] * -1;
+	private static void changeDirectionTopCollision(Ball ball) {
+		ball.changeDirectionVectorY();
 		top = false;
 		left = right = bottom = true;
 	}
 
-	public static void changeDirectionBottomCollision() {
-		directionVector[1][0] = directionVector[1][0] * -1;
+	private static void changeDirectionBottomCollision(Ball ball) {
+		ball.changeDirectionVectorY();
 		bottom = false;
 		left = right = top = true;
-	}
-
-	public static void update(double[][] thatleftBarHitBox, double[][] thatrightBarHitBox, double[][] thatballHitBox) {
-		leftBarHitBox = thatleftBarHitBox;
-		rightBarHitBox = thatrightBarHitBox;
-		ballHitBox = thatballHitBox;
-	}
-
-	
-	public static double[][] getDirectionVector() {
-		return directionVector;
-	}
-	
-	public static void setDirectionVector(double[][] dirVec) {
-		directionVector = dirVec;
-	}
-	
-	public static void changeAngle1(int angle) {
-		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
-				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
-		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
-		angle = 0;
 	}
 	
 	public static void resetCollisionConditions() {

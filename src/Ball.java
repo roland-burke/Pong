@@ -1,6 +1,8 @@
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Ball {
+	private Random r = new Random();
 	private double defaultXPos;
 	private double defaultYPos;
 	private double xPos;
@@ -25,7 +27,6 @@ public final class Ball {
 		ballHitBox[1][0] = yPos;
 		ballHitBox[1][1] = yPos + radius;
 		
-		directionVector = CollisionDetection.getDirectionVector();
 		xPos += directionVector[0][0];
 		yPos += directionVector[1][0];	
 	}
@@ -49,7 +50,6 @@ public final class Ball {
 		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
 				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, angleZero);
-		CollisionDetection.setDirectionVector(directionVector);
 		CollisionDetection.resetCollisionConditions();
 		angleZero[0][0] = speed;
 	}
@@ -77,5 +77,22 @@ public final class Ball {
 	
 	public double getYPos() {
 		return this.yPos;
+	}
+	
+	public void changeDirectionVectorX() {
+		this.directionVector[0][0] *= -1;
+		int randomInt = r.nextInt() % 15;
+		changeAngle(randomInt);
+	}
+	
+	public void changeDirectionVectorY() {
+		this.directionVector[1][0] *= -1;
+	}
+	
+	public void changeAngle(int angle) {
+		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
+				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
+		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
+		angle = 0;
 	}
 }

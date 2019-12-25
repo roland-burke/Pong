@@ -5,6 +5,7 @@ public final class ScoreBoard {
 	private String p1 = "Player1";
 	private String p2 = "Player2";
 	private String winningPlayer = p1;
+	private int winningScore = 2;
 	
 	public boolean updateScore(double[][] hitBoxBall) {
 		if (hitBoxBall[0][0] < -40) {
@@ -32,10 +33,10 @@ public final class ScoreBoard {
 	}
 	
 	public boolean checkForWinner() {
-		if(score1 >= 10) {
+		if(score1 >= winningScore) {
 			winningPlayer = p1;
 			return true;
-		} else if(score2 >= 10) {
+		} else if(score2 >= winningScore) {
 			winningPlayer = p2;
 			return true;
 		}

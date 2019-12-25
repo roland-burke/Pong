@@ -50,8 +50,8 @@ public final class Game{
 	}
 
 	private void init() {
-		ballXPos = frame.getWidth() / 2 - 20;
-		ballYPos = frame.getHeight() / 2 - 20;
+		ballXPos = frame.getWidth() / 2 - 28;
+		ballYPos = frame.getHeight() / 2 - 28;
 		
 		leftBar = new Bar(leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
 		rightBar = new Bar(rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
@@ -94,8 +94,7 @@ public final class Game{
 	}
 	
 	private void tick() {
-		CollisionDetection.update(leftBar.getHitBox(), rightBar.getHitBox(), ball.getHitBox());
-		CollisionDetection.calculate();
+		CollisionDetection.calculate(ball, leftBar, rightBar);
 		
 		ball.move();
 		
