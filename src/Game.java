@@ -12,13 +12,13 @@ public final class Game{
 	private JFrame frame;
 	
 	private boolean running = false;
+	private boolean paused = false;
 	
 	private boolean isWPressed;
 	private boolean isSPressed;
 	private boolean isUpPressed;
 	private boolean isDownPressed;
 	private boolean isRPressed;
-	private boolean isPPressed;
 	private boolean isF3Pressed = false;
 	
 	private final int leftBarInitWidth = 20;
@@ -77,10 +77,6 @@ public final class Game{
 	
 	private void run() {
 		while(running) {
-			if(isPPressed) {
-				System.out.println("Pause");
-				running = false;
-			}
 			if(celeb) {
 				for(Drop drop : drops) {
 					drop.move();
@@ -91,8 +87,10 @@ public final class Game{
 			} else {
 				dp.setInfo("");
 			}
-			tick();
-			render();
+			if(!paused) {
+				tick();				
+				render();
+			}
 			try {
 				Thread.sleep(milliSleep, nanoSleep);
 			} catch (InterruptedException e) {
@@ -104,12 +102,11 @@ public final class Game{
 	
 	public void start() {
 		running = true;
-		isPPressed = false;
 		run();
 	}
 	
-	public void pause() {
-		isPPressed = true;
+	public void setPause(boolean paused) {
+		this.paused = paused;
 	}
 	
 	private void tick() {
