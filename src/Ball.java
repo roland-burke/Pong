@@ -64,19 +64,14 @@ public final class Ball {
 	}
 	
 	private double getRandomAngle(int min, int max, int min2, int max2) {
-		double angle = ThreadLocalRandom.current().nextInt(min, max);
-		while(angle < min2 && angle > max2) {
-			angle = ThreadLocalRandom.current().nextInt(min, max);
-		}
-		return angle;
-	}
-	
-	public double getXPos() {
-		return this.xPos;
-	}
-	
-	public double getYPos() {
-		return this.yPos;
+//		double angle = ThreadLocalRandom.current().nextInt(min, max);
+//		System.out.println("angle1: " + angle);
+//		while(angle < min2 && angle > max2) {
+//			angle = ThreadLocalRandom.current().nextInt(min, max);
+//		}
+//		System.out.println("angle2: " + angle + "\n");
+//		return angle;
+		return ThreadLocalRandom.current().nextInt(min2, max2);
 	}
 	
 	public void changeDirectionVectorX() {
@@ -94,5 +89,13 @@ public final class Ball {
 				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
 		angle = 0;
+	}
+	
+	public double getXPos() {
+		return this.xPos;
+	}
+	
+	public double getYPos() {
+		return this.yPos;
 	}
 }

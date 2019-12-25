@@ -1,8 +1,5 @@
-import java.util.Random;
 
 public class CollisionDetection {
-	private static double[][] directionVector = new double[2][1];
-
 	private static boolean top = true;
 	private static boolean bottom = true;
 	private static boolean left = true;
