@@ -19,13 +19,13 @@ public final class Bar {
 	}
 
 	public void moveUp() {
-		if (yPos > 1) {
+		if (yPos > 0) {
 			yPos -= speed;
 		}
 	}
 
 	public void moveDown() {
-		if (yPos < 828) {
+		if (yPos < 82) {
 			yPos += speed;
 		}
 	}

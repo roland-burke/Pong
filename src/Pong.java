@@ -17,6 +17,10 @@ public final class Pong {
 		game = new Game(frame);
 		game.start();
 	}
+	
+	public static int getWidth() {
+		return frame.getWidth();
+	}
 
 	public static void createGameFrame() {
 		frame = new JFrame("Pong");

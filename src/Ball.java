@@ -1,30 +1,24 @@
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class Ball {
-	
-	private double xPos = Pong.frameWidth / 2 - 20;
-	private double yPos = Pong.frameHeight / 2 - 20;
+	private double defaultXPos = Pong.frameWidth / 2 - 20;
+	private double defaultYPOS = Pong.frameHeight / 2 - 20;
+	private double xPos = defaultXPos;
+	private double yPos = defaultYPOS;
 	private double radius = 40;
 	private double speed = 10;
 	private double[][] directionVector = new double[2][1];
-	private double[][] angleZero = { { speed }, { 0 } }; //Speed
+	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 	
 	private double[][] ballHitBox = { {xPos, xPos + radius},
 			{yPos, yPos + radius} };
-	
-	private double[][] leftBarHitBox;
-	private double[][] rightBarHitBox;
 
-	public void move(Bar leftBar, Bar rightBar) {
+	public void move() {
 		ballHitBox[0][0] = xPos;
 		ballHitBox[0][1] = xPos + radius;
 		ballHitBox[1][0] = yPos;
 		ballHitBox[1][1] = yPos + radius;
-		leftBarHitBox = leftBar.getHitBox();
-		rightBarHitBox = rightBar.getHitBox();
-			
-		CollisionDetection.update(leftBarHitBox, rightBarHitBox, ballHitBox);
-		CollisionDetection.calculate();
+		
 		directionVector = CollisionDetection.getDirectionVector();
 		xPos += directionVector[0][0];
 		yPos += directionVector[1][0];	
@@ -32,11 +26,11 @@ public final class Ball {
 
 	
 	public void resetDirectionAndPosition() {
-		// Ball in der Mitte platzieren
-		xPos = Pong.frameWidth / 2 - 22;
-		yPos = Pong.frameHeight / 2 - 22;
+		// Place Ball in center
+		xPos = defaultXPos;
+		yPos = defaultYPOS;
 		
-		// Zufaelligen Winkel erstellen
+		// Generate random angle
 		double angle;
 		if(ballHitBox[0][0] < -40) {
 			angle = getRandomAngle(-40, 40, 8, -8);

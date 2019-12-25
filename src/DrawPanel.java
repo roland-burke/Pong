@@ -55,6 +55,12 @@ public final class DrawPanel extends JPanel {
 		g2d.translate(panelWidth / 2, panelHeight / 2);
 		setBackground(BACK_COLOR);
 		
+		if(scoreboard.checkForWinner()) {
+			setWinner(scoreboard.getWinningPlayer());
+		} else {
+			setWinner("");
+		}
+		
 		drawMiddleLine(g2d);
 		drawPlayerNames(g2d);
 		drawBars(g2d);
@@ -62,12 +68,6 @@ public final class DrawPanel extends JPanel {
 		drawScoreBoard(g2d);
 		drawWinner(g2d);
 		drawFPS(g2d);
-		
-		if(scoreboard.checkForWinner()) {
-			setWinner(scoreboard.getWinningPlayer());
-		} else {
-			setWinner("");
-		}
 	}
 	
 	private void drawMiddleLine(Graphics2D g2d) {
@@ -98,7 +98,7 @@ public final class DrawPanel extends JPanel {
 	}
 	
 	private void drawWinner(Graphics2D g2d) {
-		drawString(g2d, scoreboard.getWinningPlayer(), winnerX, winnerY, WINNER_COLOR, WINNER_FONT);
+		drawString(g2d, winner, winnerX, winnerY, WINNER_COLOR, WINNER_FONT);
 	}
 	
 	private void drawFPS(Graphics2D g2d) {
