@@ -56,11 +56,11 @@ public final class Pong {
 				case KeyEvent.VK_P:
 					if(ppressed) {
 						ppressed = false;
-						game.setPause(ppressed);
+						game.setPause(false);
 						break;
 					} else {
 						ppressed = true;
-						game.setPause(ppressed);;
+						game.setPause(true);;
 						break;
 					}
 				case KeyEvent.VK_F3:
