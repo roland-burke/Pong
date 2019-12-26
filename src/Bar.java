@@ -6,7 +6,7 @@ public final class Bar {
 	private double xPos;
 	private double yPos = (954 / 2) - (height / 2);
 	
-	private int speed = 15;
+	private int speed = 28;
 
 	private double[][] hitBox = { {xPos, xPos + width},
 							   {yPos, yPos + height} };

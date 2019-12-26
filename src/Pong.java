@@ -1,97 +1,30 @@
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-
-import javax.swing.JFrame;
-
 public final class Pong {
+	private static int frameHeight = 1000;
+	private static int frameWidth = 1400;
 
-	private static JFrame frame;
-	public static int frameHeight = 1000;
-	public static int frameWidth = 1400;
 	private static Game game;
-	private static boolean ppressed = false;
+	
+	private static final int barWidth = 20;
+	private static final int barHeight = 140;
+	
+	private static final int leftBarX = 40;
+	private static final int leftBarY = (954 / 2) - (barHeight / 2);
+	private static final int rightBarX = 1385 - leftBarX - barWidth;
+	private static final int rightBarY = (954 / 2) - (barHeight / 2);
 	
 	public static void main(String[] args) {
-		createGameFrame();
-		game = new Game(frame);
+		
+		Bar leftBar = new Bar(leftBarX, leftBarY, barWidth, barHeight);
+		Bar rightBar = new Bar(rightBarX, rightBarY, barWidth, barHeight);
+		Ball ball = new Ball(frameWidth / 2 - 28, frameHeight / 2 - 28, 40);
+		ScoreBoard score = new ScoreBoard();
+		
+		DrawPanel dp = new DrawPanel(ball, leftBar, rightBar, score);
+		game = new Game(ball, leftBar, rightBar, score, dp);
+		new Gui("Pong", game, dp);
+		
 		game.start();
-	}
-	
-	public static int getWidth() {
-		return frame.getWidth();
-	}
-
-	public static void createGameFrame() {
-		frame = new JFrame("Pong");
-		frame.setSize(frameWidth, frameHeight);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		//frame.setResizable(false);
-		frame.addKeyListener(new KeyListener() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				// no code in here
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				switch (keyCode) {
-				case KeyEvent.VK_W:
-					game.setIsWPRessed(false);
-					break;
-				case KeyEvent.VK_S:
-					game.setIsSPRessed(false);
-					break;
-				case KeyEvent.VK_UP:
-					game.setIsUPPRessed(false);
-					break;
-				case KeyEvent.VK_DOWN:
-					game.setIsDownPRessed(false);
-					break;
-				case KeyEvent.VK_R:
-					game.setIsRPRessed(true);
-					break;
-				case KeyEvent.VK_P:
-					if(ppressed) {
-						ppressed = false;
-						game.setPause(false);
-						break;
-					} else {
-						ppressed = true;
-						game.setPause(true);;
-						break;
-					}
-				case KeyEvent.VK_F3:
-					if(!game.getIsF3Pressed()) {
-						game.setIsF3PRessed(true);
-						break;
-					}
-					game.setIsF3PRessed(false);
-					break;
-				}
-			}
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int keyCode = e.getKeyCode();
-				switch (keyCode) {
-				case KeyEvent.VK_W:
-					game.setIsWPRessed(true);
-					break;
-				case KeyEvent.VK_S:
-					game.setIsSPRessed(true);
-					break;
-				case KeyEvent.VK_UP:
-					game.setIsUPPRessed(true);
-					break;
-				case KeyEvent.VK_DOWN:
-					game.setIsDownPRessed(true);
-					break;
-				}
-			}
-		});
 	}
 }
 

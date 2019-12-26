@@ -1,72 +1,47 @@
 
-import javax.swing.JFrame;
-
 public final class Game {
-	private DrawPanel dp;
 	private Bar leftBar;
 	private Bar rightBar;
 	private ScoreBoard score;
 	private Ball ball;
-	private JFrame frame;
+	private DrawPanel dp;
+	
+	private Thread loop;
 
 	private boolean running = false;
-	private boolean paused = false;
+	private volatile boolean paused = false;
 
 	private boolean isWPressed;
 	private boolean isSPressed;
 	private boolean isUpPressed;
 	private boolean isDownPressed;
-	private boolean isRPressed;
 	private boolean isF3Pressed = false;
 
-	private final int leftBarInitWidth = 20;
-	private final int leftBarInitHeight = 140;
-	private final int leftBarInitX = 40;
-	private final int leftBarInitY = (954 / 2) - (leftBarInitHeight / 2); // (dp.getPanelHeight() / 2) -
-																			// (leftBarInitHeight / 2)
-
-	private final int rightBarInitWidth = leftBarInitWidth;
-	private final int rightBarInitHeight = 140;
-	private final int rightBarInitX = 1394 - leftBarInitX - rightBarInitWidth;
-	private final int rightBarInitY = (954 / 2) - (rightBarInitHeight / 2); // (dp.getPanelHeight() / 2) -
-																			// (rightBarInitHeight / 2)
-
-	private int ballXPos;
-	private int ballYPos;
-	private final int ballRadius = 40;
-
-	private int fps = 180;
+	private int fps = 120;
 	private int frameCount = 0;
 	
 	
-	public Game(JFrame frame) {
-		this.frame = frame;
+	public Game(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard score, DrawPanel dp) {
+		this.dp = dp;
+		this.leftBar = leftBar;
+		this.rightBar = rightBar;
+		this.ball = ball;
+		this.score = score;
 		init();
 	}
 
 	private void init() {
-		ballXPos = frame.getWidth() / 2 - 28;
-		ballYPos = frame.getHeight() / 2 - 28;
-
-		leftBar = new Bar(leftBarInitX, leftBarInitY, leftBarInitWidth, leftBarInitHeight);
-		rightBar = new Bar(rightBarInitX, rightBarInitY, rightBarInitWidth, rightBarInitHeight);
-		ball = new Ball(ballXPos, ballYPos, ballRadius);
-		score = new ScoreBoard();
-		dp = new DrawPanel(ball, leftBar, rightBar, score);
-		frame.add(dp);
 		ball.resetDirectionAndPosition();
-
-		frame.setVisible(true);
 	}
 
 	private void runGame() {
-		double GAME_HERTZ = 120;
+		double GAME_HERTZ = 60;
 		// Calculate how many ns each frame should take for our target game hertz.
 		double TIME_BETWEEN_UPDATES = 1000000000 / GAME_HERTZ;
 		// At the very most we will update the game this many times before a new render.
 		// If you're worried about visual hitches more than perfect timing, set this to
 		// 1.
-		final int MAX_UPDATES_BEFORE_RENDER = 5;
+		final int MAX_UPDATES_BEFORE_RENDER = 1;
 		// We will need the last update time.
 		double lastUpdateTime = System.nanoTime();
 		// Store the last time we rendered.
@@ -81,7 +56,7 @@ public final class Game {
 		while (running) {
 			double now = System.nanoTime();
 			int updateCount = 0;
-
+			
 			if (!paused) {
 				// Do as many game updates as we need to, potentially playing catchup.
 				while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
@@ -106,7 +81,6 @@ public final class Game {
 				// Update the frames we got.
 				int thisSecond = (int) (lastUpdateTime / 1000000000);
 				if (thisSecond > lastSecondTime) {
-					System.out.println("NEW SECOND " + thisSecond + " " + frameCount);
 					fps = frameCount;
 					frameCount = 0;
 					lastSecondTime = thisSecond;
@@ -137,7 +111,7 @@ public final class Game {
 
 	public void start() {
 		running = true;
-		Thread loop = new Thread() {
+		loop = new Thread() {
 			public void run() {
 				runGame();
 			}
@@ -145,15 +119,17 @@ public final class Game {
 		loop.start();
 	}
 
-	public void setPause(boolean paused) {
-		this.paused = paused;
+	public void pause() {
+		if(paused) {
+			this.paused = false;
+		} else {
+			this.paused = true;
+		}
 	}
 
 	private void tick() {
 		CollisionDetection.calculate(ball, leftBar, rightBar);
-
 		ball.move();
-
 		if (score.updateScore(ball.getHitBox())) {
 			ball.resetDirectionAndPosition();
 		}
@@ -161,19 +137,7 @@ public final class Game {
 		if (score.checkForWinner()) {
 			ball.resetDirectionAndPositionAndSpeed();
 		}
-
 		moveBars();
-
-		if (isRPressed) {
-			reset();
-			isRPressed = false;
-		}
-
-		if (isF3Pressed) {
-			dp.setInfo("FPS: " + Integer.toString(fps));
-		} else {
-			dp.setInfo("");
-		}
 	}
 
 	private void render(float interpolation) {
@@ -182,7 +146,7 @@ public final class Game {
 		dp.repaint();
 	}
 
-	private void reset() {
+	public void reset() {
 		ball.resetDirectionAndPosition();
 		score.reset();
 	}
@@ -199,6 +163,16 @@ public final class Game {
 		}
 		if (isDownPressed) {
 			rightBar.moveDown();
+		}
+	}
+	
+	public void showFps() {
+		if(!isF3Pressed) {
+			isF3Pressed = true;
+			dp.setInfo("FPS: " + fps);
+		} else {
+			isF3Pressed = false;
+			dp.setInfo("");
 		}
 	}
 
@@ -218,15 +192,7 @@ public final class Game {
 		this.isDownPressed = bool;
 	}
 
-	public void setIsRPRessed(boolean bool) {
-		this.isRPressed = bool;
-	}
-
 	public void setIsF3PRessed(boolean bool) {
 		this.isF3Pressed = bool;
-	}
-
-	public boolean getIsF3Pressed() {
-		return this.isF3Pressed;
 	}
 }

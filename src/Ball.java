@@ -9,7 +9,7 @@ public final class Ball {
 	private double xPos;
 	private double yPos;
 	private double radius;
-	private double speed = 10;
+	private double speed = 20;
 	private double[][] directionVector = new double[2][1];
 	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 	
