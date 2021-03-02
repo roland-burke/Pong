@@ -4,7 +4,7 @@ public final class Bar {
 	private int width = 20;
 	private int height = 140;
 	private double xPos;
-	private double yPos = (954 / 2) - (height / 2);
+	private double yPos = (Pong.frameHeight / 2) - (height / 2);
 	
 	private int speed = 28;
 
@@ -25,9 +25,13 @@ public final class Bar {
 	}
 
 	public void moveDown() {
-		if (yPos < 825) {
+		if (yPos < Pong.frameHeight - height) {
 			yPos += speed;
 		}
+	}
+	
+	public void setXPos(double xPos) {
+		this.xPos = xPos;
 	}
 	
 	public double[][] getHitBox() {

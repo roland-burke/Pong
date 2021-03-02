@@ -11,7 +11,7 @@ public final class ScoreBoard {
 		if (hitBoxBall[0][0] < -40) {
 			Score2();
 			return true;
-		} else if (hitBoxBall[0][0] > 1400) {
+		} else if (hitBoxBall[0][0] > Pong.fieldWidth) {
 			Score1();
 			return true;
 		}
@@ -52,7 +52,7 @@ public final class ScoreBoard {
 	}
 	
 	public String getScoreBoard() {
-		return score1 + "  " + score2;
+		return score1 + "    " + score2;
 	}
 
 	public String getP1() {

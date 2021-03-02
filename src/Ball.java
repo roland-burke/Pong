@@ -4,29 +4,27 @@ import java.util.concurrent.ThreadLocalRandom;
 public final class Ball {
 	private Random r = new Random();
 	private int randomFactor = 16;
-	private double defaultXPos;
-	private double defaultYPos;
 	private double xPos;
 	private double yPos;
-	private double radius;
+	private double diameter;
 	private double speed = 20;
 	private double[][] directionVector = new double[2][1];
 	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 	
-	private double[][] ballHitBox = { {xPos, xPos + radius},
-			{yPos, yPos + radius} };
+	private double[][] ballHitBox = { {xPos, xPos + diameter},
+			{yPos, yPos + diameter} };
 	
 	public Ball(int xPos, int yPos, int radius) {
-		this.xPos = this.defaultXPos = xPos;
-		this.yPos = this.defaultYPos = yPos;
-		this.radius = radius;
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.diameter = radius;
 	}
 
 	public void move() {
 		ballHitBox[0][0] = xPos;
-		ballHitBox[0][1] = xPos + radius;
+		ballHitBox[0][1] = xPos + diameter;
 		ballHitBox[1][0] = yPos;
-		ballHitBox[1][1] = yPos + radius;
+		ballHitBox[1][1] = yPos + diameter;
 		
 		xPos += directionVector[0][0];
 		yPos += directionVector[1][0];	
@@ -35,8 +33,8 @@ public final class Ball {
 	
 	public void resetDirectionAndPosition() {
 		// Place Ball in center
-		xPos = defaultXPos;
-		yPos = defaultYPos;
+		xPos = (Pong.fieldWidth / 2) - (this.diameter/2);
+		yPos = Pong.getFieldHeight() / 2;
 		
 		// Generate random angle
 		double angle;

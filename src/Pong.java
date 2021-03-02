@@ -1,14 +1,17 @@
 
 public final class Pong {
-	private static int frameHeight = 1000;
+	public static int frameHeight = 1000;
 	private static int frameWidth = 1400;
 
 	private static Game game;
 	
-	private static final int barWidth = 20;
+	public static final int FRAME_OFFSET = 20;
+	public static int fieldWidth = 1400;
+	
+	private static final int barWidth = 22;
 	private static final int barHeight = 140;
 	
-	private static final int leftBarX = 40;
+	public static final int leftBarX = 40;
 	private static final int leftBarY = (954 / 2) - (barHeight / 2);
 	private static final int rightBarX = 1385 - leftBarX - barWidth;
 	private static final int rightBarY = (954 / 2) - (barHeight / 2);
@@ -22,9 +25,15 @@ public final class Pong {
 		
 		DrawPanel dp = new DrawPanel(ball, leftBar, rightBar, score);
 		game = new Game(ball, leftBar, rightBar, score, dp);
-		new Gui("Pong", game, dp);
-		
-		game.start();
+		new MainMenu("Pong - Main Menu", game, dp);
+	}
+	
+	public static int getFieldHeight() {
+		return frameHeight - FRAME_OFFSET;
+	}
+	
+	public static void setFrameHeight(int newFrameHeight) {
+		Pong.frameHeight = newFrameHeight;
 	}
 }
 

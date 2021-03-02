@@ -63,6 +63,7 @@ public final class DrawPanel extends JPanel {
 			setWinner("");
 		}
 		
+		updateValues();
 		drawMiddleLine(g2d);
 		drawPlayerNames(g2d);
 		drawBars(g2d);
@@ -73,6 +74,13 @@ public final class DrawPanel extends JPanel {
 		
 	}
 	
+	private void updateValues() {
+		double rightBarXPos = getWidth() - Pong.leftBarX - rightBar.getWidth();
+		rightBar.setXPos(rightBarXPos);
+		Pong.fieldWidth = getWidth();
+		Pong.setFrameHeight(getHeight());
+	}
+	
 	private void drawMiddleLine(Graphics2D g2d) {
 		g2d.setColor(Color.WHITE);
 		g2d.setStroke(MIDDLELINE_STROKE);
@@ -81,7 +89,7 @@ public final class DrawPanel extends JPanel {
 	
 	private void drawPlayerNames(Graphics2D g2d) {
 		drawString(g2d, scoreboard.getP1(), 100, 30, PLAYER_COLOR, PLAYER_FONT);
-		drawString(g2d, scoreboard.getP2(), 1180, 30, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getP2(), getWidth() - 180, 30, PLAYER_COLOR, PLAYER_FONT);
 	}
 	
 	private void drawBars(Graphics2D g2d) {

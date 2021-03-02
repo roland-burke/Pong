@@ -11,11 +11,11 @@ public class CollisionDetection {
 		double[][] ballHitBox = ball.getHitBox();
 		
 		// left side
-		if (ballHitBox[0][0] <= leftBarHitBox[0][1] && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + 20 > leftBarHitBox[1][0] && ballHitBox[1][0] + 20 < leftBarHitBox[1][1] && left) {
+		if (ballHitBox[0][0] <= leftBarHitBox[0][1] + leftBar.getWidth() && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + leftBar.getWidth() > leftBarHitBox[1][0] && ballHitBox[1][0] + leftBar.getWidth() < leftBarHitBox[1][1] && left) {
 			changeDirectionLeftCollision(ball);
 		}
 		// right side
-		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] && ballHitBox[1][0] + 20 > rightBarHitBox[1][0] && ballHitBox[1][0] + 20 < rightBarHitBox[1][1] && right) {
+		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] - rightBar.getWidth() && ballHitBox[1][0] + rightBar.getWidth() > rightBarHitBox[1][0] && ballHitBox[1][0] + rightBar.getWidth() < rightBarHitBox[1][1] && right) {
 			changeDirectionRightCollision(ball);
 		}
 		// top
@@ -23,7 +23,7 @@ public class CollisionDetection {
 			changeDirectionTopCollision(ball);
 		}
 		// bottom
-		if (ballHitBox[1][1] > 954 && bottom) {
+		if (ballHitBox[1][1] > Pong.getFieldHeight() && bottom) {
 			changeDirectionBottomCollision(ball);
 		}
 	}
