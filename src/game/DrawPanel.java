@@ -27,8 +27,6 @@ public final class DrawPanel extends JPanel {
 	private boolean debug = false;
 	private boolean fps = false;
 	
-	private float interpolation = 1;
-	
 	private final Color BAR_COLOR = new Color(200, 21, 0); // red
 	private final Color BALL_COLOR = new Color(180, 180, 180); // gray
 	private final Color PLAYER_COLOR = new Color(180, 180, 180); // gray
@@ -170,10 +168,6 @@ public final class DrawPanel extends JPanel {
 	
 	public void setInfo(String info) {
 		this.info = info;
-	}
-	
-	public void setInterpolation(float interpolation) {
-		this.interpolation = interpolation;
 	}
 	
 	public void setDebug(boolean debug) {

@@ -140,7 +140,7 @@ public final class Game {
 
 	private void render(float interpolation) {
 		frameCount++;
-		dp.setInterpolation(interpolation);
+		//dp.setInterpolation(interpolation);
 		dp.repaint();
 	}
 
