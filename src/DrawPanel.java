@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 
 import javax.swing.JPanel;
@@ -54,6 +55,9 @@ public final class DrawPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		        RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		g2d.translate(panelWidth / 2, panelHeight / 2);
 		setBackground(BACK_COLOR);
 		
@@ -75,7 +79,7 @@ public final class DrawPanel extends JPanel {
 	}
 	
 	private void updateValues() {
-		double rightBarXPos = getWidth() - Pong.leftBarX - rightBar.getWidth();
+		double rightBarXPos = getWidth() - Pong.LEFT_BAR_X_POS - rightBar.getWidth();
 		rightBar.setXPos(rightBarXPos);
 		Pong.fieldWidth = getWidth();
 		Pong.setFrameHeight(getHeight());

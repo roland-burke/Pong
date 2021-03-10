@@ -6,25 +6,23 @@ public final class Ball {
 	private int randomFactor = 16;
 	private double xPos;
 	private double yPos;
-	private double diameter;
-	private double speed = 20;
+	private final double DIAMETER = 40;
+	private double speed = Pong.BALL_SPEED;
 	private double[][] directionVector = new double[2][1];
 	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 	
-	private double[][] ballHitBox = { {xPos, xPos + diameter},
-			{yPos, yPos + diameter} };
+	private double[][] ballHitBox = { {xPos, xPos + this.DIAMETER},
+			{yPos, yPos + this.DIAMETER} };
 	
-	public Ball(int xPos, int yPos, int radius) {
-		this.xPos = xPos;
-		this.yPos = yPos;
-		this.diameter = radius;
+	public Ball() {
+		resetDirectionAndPosition();
 	}
 
 	public void move() {
 		ballHitBox[0][0] = xPos;
-		ballHitBox[0][1] = xPos + diameter;
+		ballHitBox[0][1] = xPos + this.DIAMETER;
 		ballHitBox[1][0] = yPos;
-		ballHitBox[1][1] = yPos + diameter;
+		ballHitBox[1][1] = yPos + this.DIAMETER;
 		
 		xPos += directionVector[0][0];
 		yPos += directionVector[1][0];	
@@ -33,7 +31,7 @@ public final class Ball {
 	
 	public void resetDirectionAndPosition() {
 		// Place Ball in center
-		xPos = (Pong.fieldWidth / 2) - (this.diameter/2);
+		xPos = (Pong.fieldWidth / 2) - (this.DIAMETER/2);
 		yPos = Pong.getFieldHeight() / 2;
 		
 		// Generate random angle

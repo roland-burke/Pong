@@ -1,9 +1,12 @@
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class MainMenu extends JFrame{
 private static final long serialVersionUID = 1L;
@@ -12,6 +15,9 @@ private static final long serialVersionUID = 1L;
 	private int frameWidth = 600;
 	
 	private JButton startGameButton;
+	private JButton exitGameButton;
+	private JPanel panel;
+	private JPanel buttonPanel = new JPanel(new FlowLayout());
 	
 	private Game game;
 	private DrawPanel dp;
@@ -19,9 +25,6 @@ private static final long serialVersionUID = 1L;
 	public MainMenu(String name, Game game, DrawPanel dp) {
 		this.game = game;
 		this.dp = dp;
-		
-		this.setLayout(new FlowLayout());
-		
 	
 		this.setTitle(name);
 		this.setSize(frameWidth, frameHeight);
@@ -34,8 +37,14 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	private void setupUI() {
+		getContentPane().setLayout(new BorderLayout());
+		panel = new JPanel();
+		panel.setLayout(new GridLayout(2, 1));
+		
 		this.setupStartGameButton();
 		this.setupExitButton();
+		
+		getContentPane().add(panel, BorderLayout.CENTER);
 	}
 	
 	private void setupStartGameButton() {
@@ -50,22 +59,28 @@ private static final long serialVersionUID = 1L;
 			}
 		});
 		
-		this.add(startGameButton);
+		buttonPanel = new JPanel(new FlowLayout());
+		buttonPanel.add(startGameButton);
+		
+		panel.add(buttonPanel);
 	}
 	
 	private void setupExitButton() {
-		startGameButton = new JButton();
-		startGameButton.setSize(200,50);
-		startGameButton.setVisible(true);
-		startGameButton.setText("Exit Game");
-		startGameButton.addActionListener(new ActionListener() {
+		exitGameButton = new JButton();
+		exitGameButton.setSize(200,50);
+		exitGameButton.setVisible(true);
+		exitGameButton.setText("Exit Game");
+		exitGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				exitGame();
 			}
 		});
 		
-		this.add(startGameButton);
+		buttonPanel = new JPanel(new FlowLayout());
+		buttonPanel.add(exitGameButton);
+		
+		panel.add(buttonPanel);
 	}
 	
 	private void exitGame() {

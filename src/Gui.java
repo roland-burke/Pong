@@ -6,15 +6,13 @@ import javax.swing.JFrame;
 public class Gui extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
-	private int frameHeight = 1000;
-	private int frameWidth = 1400;
 	private Game game;
 	
 	public Gui(String name, Game game, DrawPanel dp) {
 		this.game = game;
 		
 		this.setTitle(name);
-		this.setSize(frameWidth, frameHeight);
+		this.setSize(Pong.frameWidth, Pong.frameHeight);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		//frame.setResizable(false);

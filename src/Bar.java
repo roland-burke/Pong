@@ -1,21 +1,20 @@
 
 public final class Bar {
 	
-	private int width = 20;
-	private int height = 140;
+	public static final int WIDTH = 22;
+	public static final int HEIGHT = 140;
 	private double xPos;
-	private double yPos = (Pong.frameHeight / 2) - (height / 2);
+	private double yPos = (Pong.frameHeight / 2) - (HEIGHT / 2);
 	
-	private int speed = 28;
+	private int speed;
 
-	private double[][] hitBox = { {xPos, xPos + width},
-							   {yPos, yPos + height} };
+	private double[][] hitBox = { {xPos, xPos + WIDTH},
+							   {yPos, yPos + HEIGHT} };
 
-	public Bar(int xPos, int yPos, int width, int height) {
+	public Bar(int xPos, int initialYPos) {
 		this.xPos = xPos;
-		this.yPos = yPos;
-		this.width = width;
-		this.height = height;
+		this.yPos = initialYPos;
+		this.speed = Pong.BAR_SPEED;
 	}
 
 	public void moveUp() {
@@ -25,7 +24,7 @@ public final class Bar {
 	}
 
 	public void moveDown() {
-		if (yPos < Pong.frameHeight - height) {
+		if (yPos < Pong.frameHeight - HEIGHT) {
 			yPos += speed;
 		}
 	}
@@ -36,9 +35,9 @@ public final class Bar {
 	
 	public double[][] getHitBox() {
 		hitBox[0][0] = xPos;
-		hitBox[0][1] = xPos + width;
+		hitBox[0][1] = xPos + WIDTH;
 		hitBox[1][0] = yPos;
-		hitBox[1][1] = yPos + height;
+		hitBox[1][1] = yPos + HEIGHT;
 		return hitBox;
 	}
 	
@@ -51,10 +50,10 @@ public final class Bar {
 	}
 	
 	public double getWidth() {
-		return this.width;
+		return Bar.WIDTH;
 	}
 	
 	public double getHeight() {
-		return this.height;
+		return Bar.HEIGHT;
 	}
 }
