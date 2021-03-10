@@ -1,3 +1,4 @@
+package game;
 
 public interface GameElement {
 	public double[][] getHitBox();

@@ -1,3 +1,4 @@
+package game;
 
 public class CollisionDetection {
 	// true means, this side will be counted

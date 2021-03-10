@@ -1,3 +1,4 @@
+package game;
 
 public final class Game {
 	private Bar leftBar;

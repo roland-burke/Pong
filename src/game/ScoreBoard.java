@@ -1,3 +1,4 @@
+package game;
 
 public final class ScoreBoard {
 	private Player player1;

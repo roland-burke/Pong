@@ -1,24 +1,32 @@
+package gui;
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import game.Ball;
+import game.DrawPanel;
+import game.Game;
 
 public class MainMenu extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private int frameHeight = 400;
 	private int frameWidth = 600;
+	public static final Color background = new Color(186, 204, 245);
 
 	private JButton startGameButton;
 	private JButton exitGameButton;
+	private JButton singlePlayerButton;
+	private JButton controlsButton;
 	private JPanel panel;
-	private JPanel buttonPanel = new JPanel(new FlowLayout());
 
 	private Game game;
 	private DrawPanel dp;
@@ -42,9 +50,12 @@ public class MainMenu extends JFrame {
 	private void setupUI() {
 		getContentPane().setLayout(new BorderLayout());
 		panel = new JPanel();
-		panel.setLayout(new GridLayout(2, 1));
+		panel.setBackground(background);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
 		this.setupStartGameButton();
+		this.setupSinglePlayerButton();
+		this.setupControlsButton();
 		this.setupExitButton();
 
 		getContentPane().add(panel, BorderLayout.CENTER);
@@ -54,6 +65,7 @@ public class MainMenu extends JFrame {
 		startGameButton = new JButton();
 		startGameButton.setSize(200, 50);
 		startGameButton.setText("Start Game");
+		startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -61,10 +73,39 @@ public class MainMenu extends JFrame {
 			}
 		});
 
-		buttonPanel = new JPanel(new FlowLayout());
-		buttonPanel.add(startGameButton);
+		panel.add(startGameButton);
+		startGameButton.setVisible(true);
+	}
+	
+	private void setupSinglePlayerButton() {
+		singlePlayerButton = new JButton();
+		singlePlayerButton.setSize(200, 50);
+		singlePlayerButton.setText("Start Game (Singleplayer)");
+		singlePlayerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		singlePlayerButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//startGame();
+			}
+		});
 
-		panel.add(buttonPanel);
+		panel.add(singlePlayerButton);
+		startGameButton.setVisible(true);
+	}
+	
+	private void setupControlsButton() {
+		controlsButton = new JButton();
+		controlsButton.setSize(200, 50);
+		controlsButton.setText("Controls");
+		controlsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		controlsButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new Controls();
+			}
+		});
+
+		panel.add(controlsButton);
 		startGameButton.setVisible(true);
 	}
 
@@ -72,6 +113,7 @@ public class MainMenu extends JFrame {
 		exitGameButton = new JButton();
 		exitGameButton.setSize(200, 50);
 		exitGameButton.setText("Exit Game");
+		exitGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		exitGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,10 +121,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 
-		buttonPanel = new JPanel(new FlowLayout());
-		buttonPanel.add(exitGameButton);
-
-		panel.add(buttonPanel);
+		panel.add(exitGameButton);
 		exitGameButton.setVisible(true);
 	}
 

@@ -1,7 +1,12 @@
+package gui;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+
+import game.DrawPanel;
+import game.Game;
 
 public class Gui extends JFrame {
 	private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-
+package game;
 public final class Bar implements GameElement {
 
 	public static final int WIDTH = 22;

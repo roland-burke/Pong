@@ -1,3 +1,5 @@
+package game;
+import gui.MainMenu;
 
 public final class Pong {
 	public static int fieldHeight = 963;
