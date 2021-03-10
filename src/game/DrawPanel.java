@@ -19,15 +19,13 @@ public final class DrawPanel extends JPanel {
 	private Bar rightBar;
 	private ScoreBoard scoreboard;
 	
-	private int panelWidth = getWidth(); // *1349* weil der Frame 6 pxl breiter ist als das Panel
-	private int panelHeight = getHeight(); // *954* weil der Frame 46 pxl hoeher ist als das Panel
-	
 	private int winnerX = 1500;
 	private int winnerY = 1500;
 	
 	private String winner = "";
 	private String info = "";
 	private boolean debug = false;
+	private boolean fps = false;
 	
 	private float interpolation = 1;
 	
@@ -63,8 +61,7 @@ public final class DrawPanel extends JPanel {
 		
 		if(scoreboard.checkForWinner()) {
 			setWinner(scoreboard.getWinningPlayerName());
-		} else {
-			setWinner("");
+			drawWinner(g2d);
 		}
 		
 		updateValues();
@@ -73,8 +70,9 @@ public final class DrawPanel extends JPanel {
 		drawBars(g2d);
 		drawBall(g2d);
 		drawScoreBoard(g2d);
-		drawWinner(g2d);
-		drawFPS(g2d);
+		if(fps) {
+			drawFPS(g2d);			
+		}
 		if(debug) {
 			drawDebug(g2d);
 		}
@@ -180,6 +178,10 @@ public final class DrawPanel extends JPanel {
 	
 	public void setDebug(boolean debug) {
 		this.debug = debug;
+	}
+	
+	public void setFps(boolean fps) {
+		this.fps = fps;
 	}
 }
 

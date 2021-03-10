@@ -126,6 +126,7 @@ public final class Game {
 	}
 
 	private void tick() {
+		dp.setInfo("FPS: " + fps);
 		ball.move(leftBar, rightBar);
 		if (score.updateScore(ball.getHitBox())) {
 			ball.resetDirectionAndPosition();
@@ -167,21 +168,19 @@ public final class Game {
 	public void showFps() {
 		if(!isF3Pressed) {
 			isF3Pressed = true;
-			dp.setInfo("FPS: " + fps);
 		} else {
 			isF3Pressed = false;
-			dp.setInfo("");
 		}
+		dp.setFps(isF3Pressed);
 	}
 	
 	public void showDebugInfo() {
 		if(!isF2Pressed) {
 			isF2Pressed = true;
-			dp.setDebug(isF2Pressed);
 		} else {
 			isF2Pressed = false;
-			dp.setDebug(isF2Pressed);
 		}
+		dp.setDebug(isF2Pressed);
 	}
 
 	public void setIsWPRessed(boolean bool) {
