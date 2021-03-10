@@ -50,7 +50,6 @@ private static final long serialVersionUID = 1L;
 	private void setupStartGameButton() {
 		startGameButton = new JButton();
 		startGameButton.setSize(200,50);
-		startGameButton.setVisible(true);
 		startGameButton.setText("Start Game");
 		startGameButton.addActionListener(new ActionListener() {
 			@Override
@@ -63,12 +62,12 @@ private static final long serialVersionUID = 1L;
 		buttonPanel.add(startGameButton);
 		
 		panel.add(buttonPanel);
+		startGameButton.setVisible(true);
 	}
 	
 	private void setupExitButton() {
 		exitGameButton = new JButton();
 		exitGameButton.setSize(200,50);
-		exitGameButton.setVisible(true);
 		exitGameButton.setText("Exit Game");
 		exitGameButton.addActionListener(new ActionListener() {
 			@Override
@@ -81,6 +80,7 @@ private static final long serialVersionUID = 1L;
 		buttonPanel.add(exitGameButton);
 		
 		panel.add(buttonPanel);
+		exitGameButton.setVisible(true);
 	}
 	
 	private void exitGame() {

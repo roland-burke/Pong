@@ -1,70 +1,65 @@
 
 public final class ScoreBoard {
-	private int score1 = 0;
-	private int score2 = 0;
-	private String p1 = "Player1";
-	private String p2 = "Player2";
-	private String winningPlayer = p1;
-	private int winningScore = 10;
+	private Player player1;
+	private Player player2;
+	
+	private Player winningPlayer = player1;
+	private int winningScore = Pong.WINNING_SCORE;
+	
+	public ScoreBoard(Player player1, Player player2) {
+		this.player1 = player1;
+		this.player2 = player2;
+	}
 	
 	public boolean updateScore(double[][] hitBoxBall) {
 		if (hitBoxBall[0][0] < -40) {
-			Score2();
-			return true;
+			this.player2.score();
 		} else if (hitBoxBall[0][0] > Pong.fieldWidth) {
-			Score1();
-			return true;
+			this.player1.score();
+		} else {
+			return false;
 		}
-		return false;
-	}
-	
-	private void Score1() {
-		this.score1 += 1;
-	}
-	
-	private void Score2() {
-		this.score2 += 1;
+		return true;
 	}
 	
 	public void reset() {
-		score1 = 0;
-		score2 = 0;
-		winningPlayer = "";
+		player1.resetScore();
+		player2.resetScore();
 	}
 	
 	public boolean checkForWinner() {
-		if(score1 >= winningScore) {
-			winningPlayer = p1;
-			return true;
-		} else if(score2 >= winningScore) {
-			winningPlayer = p2;
-			return true;
+		if(player1.getScore() >= winningScore) {
+			winningPlayer = player1;
+		} else if(player2.getScore() >= winningScore) {
+			winningPlayer = player2;
+		} else {
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	public int getScore1() {
-		return score1;
+		return player1.getScore();
 	}
 
 	public int getScore2() {
-		return score2;
+		return player2.getScore();
 	}
 	
 	public String getScoreBoard() {
-		return score1 + "    " + score2;
+		return player1.getScore() + "    " + player2.getScore();
 	}
 
-	public String getP1() {
-		return p1;
+	public String getPlayer1Name() {
+		return player1.getName();
 	}
 
-	public String getP2() {
-		return p2;
+	public String getPlayer2Name() {
+		return player2.getName();
 	}
 
-	public String getWinningPlayer() {
-		return winningPlayer;
+	public String getWinningPlayerName() {
+		return winningPlayer.getName();
 	}
 	
 }

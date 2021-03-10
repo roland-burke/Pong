@@ -27,11 +27,6 @@ public final class Game {
 		this.rightBar = rightBar;
 		this.ball = ball;
 		this.score = score;
-		init();
-	}
-
-	private void init() {
-		ball.resetDirectionAndPosition();
 	}
 
 	private void runGame() {
