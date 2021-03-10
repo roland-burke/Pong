@@ -1,5 +1,7 @@
 
 public class CollisionDetection {
+	// true means, this side will be counted
+	// false means, this side has just been hit
 	private static boolean top = true;
 	private static boolean bottom = true;
 	private static boolean left = true;
@@ -11,11 +13,11 @@ public class CollisionDetection {
 		double[][] ballHitBox = ball.getHitBox();
 		
 		// left side
-		if (ballHitBox[0][0] <= leftBarHitBox[0][1] + leftBar.getWidth() && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + leftBar.getWidth() > leftBarHitBox[1][0] && ballHitBox[1][0] + leftBar.getWidth() < leftBarHitBox[1][1] && left) {
+		if (ballHitBox[0][0] <= leftBarHitBox[0][1] && ballHitBox[0][0] > leftBarHitBox[0][0] && ballHitBox[1][0] + leftBar.getWidth() > leftBarHitBox[1][0] && ballHitBox[1][0] + leftBar.getWidth() < leftBarHitBox[1][1] && left) {
 			changeDirectionLeftCollision(ball);
 		}
 		// right side
-		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] - rightBar.getWidth() && ballHitBox[1][0] + rightBar.getWidth() > rightBarHitBox[1][0] && ballHitBox[1][0] + rightBar.getWidth() < rightBarHitBox[1][1] && right) {
+		if (ballHitBox[0][0] < rightBarHitBox[0][1] && ballHitBox[0][1] > rightBarHitBox[0][0] && ballHitBox[1][0] + rightBar.getWidth() > rightBarHitBox[1][0] && ballHitBox[1][0] + rightBar.getWidth() < rightBarHitBox[1][1] && right) {
 			changeDirectionRightCollision(ball);
 		}
 		// top

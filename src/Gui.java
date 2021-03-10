@@ -1,3 +1,4 @@
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -15,7 +16,6 @@ public class Gui extends JFrame {
 		this.setSize(Pong.frameWidth, Pong.frameHeight);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
-		//frame.setResizable(false);
 		this.add(dp);
 		this.addKeyListener(getKeylistener());
 		this.setVisible(true);

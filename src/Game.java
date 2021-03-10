@@ -123,8 +123,7 @@ public final class Game {
 	}
 
 	private void tick() {
-		CollisionDetection.calculate(ball, leftBar, rightBar);
-		ball.move();
+		ball.move(leftBar, rightBar);
 		if (score.updateScore(ball.getHitBox())) {
 			ball.resetDirectionAndPosition();
 		}

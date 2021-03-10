@@ -6,9 +6,9 @@ public final class Pong {
 	public static final int FRAME_OFFSET = 20;
 	
 	// Game settings
-	public final static double BALL_SPEED = 20;
-	public final static int BAR_SPEED = 28;
-	public final static int WINNING_SCORE = 10;
+	public final static double BALL_SPEED = 10; //20
+	public final static int BAR_SPEED = 28; //28
+	public final static int WINNING_SCORE = 10; //20
 	
 	
 	// Left Bar
@@ -38,7 +38,7 @@ public final class Pong {
 	}
 	
 	public static int getFieldHeight() {
-		return Pong.frameHeight - FRAME_OFFSET;
+		return Pong.frameHeight;
 	}
 	
 	public static void setFrameHeight(int newFrameHeight) {

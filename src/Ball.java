@@ -7,7 +7,7 @@ public final class Ball implements GameElement {
 	private double xPos;
 	private double yPos;
 	private final double DIAMETER = 40;
-	private double speed = Pong.BALL_SPEED;
+	private double speed = 2;
 	private double[][] directionVector = new double[2][1];
 	private double[][] angleZero = { { speed }, { 0 } }; // Speed
 
@@ -17,15 +17,19 @@ public final class Ball implements GameElement {
 		resetDirectionAndPosition();
 	}
 
-	public void move() {
+	public void move(Bar leftBar, Bar rightBar) {
 		ballHitBox[0][0] = xPos;
 		ballHitBox[0][1] = xPos + this.DIAMETER;
 		ballHitBox[1][0] = yPos;
 		ballHitBox[1][1] = yPos + this.DIAMETER;
-
-		xPos += directionVector[0][0];
-		yPos += directionVector[1][0];
+		
+		for(int i = 0; i < Pong.BALL_SPEED; i++) {
+			CollisionDetection.calculate(this, leftBar, rightBar);
+			xPos += directionVector[0][0];
+			yPos += directionVector[1][0];			
+		}
 	}
+
 
 	public void resetDirectionAndPosition() {
 		// Place Ball in center
@@ -74,7 +78,6 @@ public final class Ball implements GameElement {
 		double[][] rotationMatrix = { { Math.cos(Math.toRadians(angle)), -Math.sin(Math.toRadians(angle)) },
 				{ Math.sin(Math.toRadians(angle)), Math.cos(Math.toRadians(angle)) } };
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
-		angle = 0;
 	}
 
 	public double getXPos() {
