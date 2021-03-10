@@ -26,6 +26,7 @@ public final class DrawPanel extends JPanel {
 	
 	private String winner = "";
 	private String info = "";
+	private boolean debug = false;
 	
 	private float interpolation = 1;
 	
@@ -48,6 +49,7 @@ public final class DrawPanel extends JPanel {
 		this.leftBar = leftBar;
 		this.rightBar = rightBar;
 		this.scoreboard = scoreBoard;
+		setBackground(BACK_COLOR);
 	}
 	
 	@Override
@@ -58,9 +60,6 @@ public final class DrawPanel extends JPanel {
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		g2d.translate(panelWidth / 2, panelHeight / 2);
-		setBackground(BACK_COLOR);
-		
 		if(scoreboard.checkForWinner()) {
 			setWinner(scoreboard.getWinningPlayerName());
 		} else {
@@ -68,13 +67,16 @@ public final class DrawPanel extends JPanel {
 		}
 		
 		updateValues();
-		drawMiddleLine(g2d);
+		drawGameBackground(g2d);
 		drawPlayerNames(g2d);
 		drawBars(g2d);
 		drawBall(g2d);
 		drawScoreBoard(g2d);
 		drawWinner(g2d);
 		drawFPS(g2d);
+		if(debug) {
+			drawDebug(g2d);
+		}
 		
 	}
 	
@@ -83,6 +85,18 @@ public final class DrawPanel extends JPanel {
 		rightBar.setXPos(rightBarXPos);
 		Pong.fieldWidth = getWidth();
 		Pong.setFrameHeight(getHeight());
+	}
+	
+	private void drawGameBackground(Graphics2D g2d) {
+		drawMiddleLine(g2d);
+		drawCircle(g2d);
+	}
+	
+	private void drawCircle(Graphics2D g2d) {
+		g2d.setColor(Color.WHITE);
+		g2d.setStroke(MIDDLELINE_STROKE);
+		g2d.drawLine((int) getWidth() / 2, 0, getWidth() / 2, getHeight());
+		g2d.drawOval(getWidth() / 2 - 50, getHeight() / 2 - 50, 100, 100);
 	}
 	
 	private void drawMiddleLine(Graphics2D g2d) {
@@ -100,6 +114,10 @@ public final class DrawPanel extends JPanel {
 		g2d.setColor(BAR_COLOR);
 		g2d.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // left bar
 		g2d.fillRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // right bar
+		
+		g2d.setColor(Color.BLACK);
+		g2d.drawRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // left bar
+		g2d.drawRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // right bar
 	}
 	
 	private void drawBall(Graphics2D g2d) {
@@ -118,6 +136,16 @@ public final class DrawPanel extends JPanel {
 	
 	private void drawFPS(Graphics2D g2d) {
 		drawString(g2d, info, 1250, 950, Color.WHITE, FPS_FONT);
+	}
+	
+	private void drawDebug(Graphics2D g2d) {
+		g2d.setStroke(new BasicStroke(1));
+		int xpos = 70;
+		drawString(g2d, "frame height: " + getHeight(), xpos, 820, Color.WHITE, FPS_FONT);
+		drawString(g2d, "frame width: " + getWidth(), xpos, 840, Color.WHITE, FPS_FONT);
+		drawString(g2d, "ball (top left) x: " + ball.getXPos() + ", y: " + ball.getXPos(), xpos, 860, Color.WHITE, FPS_FONT);
+		drawString(g2d, "left bar (top left) x: " + leftBar.getXPos() + ", y: " + leftBar.getYPos(), xpos, 880, Color.WHITE, FPS_FONT);
+		drawString(g2d, "right bar (top left) x: " + rightBar.getXPos() + ", y: " + rightBar.getYPos(), xpos, 900, Color.WHITE, FPS_FONT);
 	}
 	
 	private void drawString(Graphics2D g2d, String text, int xPos, int yPos, Color color, Font font) {
@@ -147,6 +175,10 @@ public final class DrawPanel extends JPanel {
 	
 	public void setInterpolation(float interpolation) {
 		this.interpolation = interpolation;
+	}
+	
+	public void setDebug(boolean debug) {
+		this.debug = debug;
 	}
 }
 

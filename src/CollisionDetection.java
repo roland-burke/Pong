@@ -25,7 +25,7 @@ public class CollisionDetection {
 			changeDirectionTopCollision(ball);
 		}
 		// bottom
-		if (ballHitBox[1][1] > Pong.getFieldHeight() && bottom) {
+		if (ballHitBox[1][1] > Pong.fieldHeight && bottom) {
 			changeDirectionBottomCollision(ball);
 		}
 	}

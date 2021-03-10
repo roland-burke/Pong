@@ -4,7 +4,7 @@ public final class Bar implements GameElement {
 	public static final int WIDTH = 22;
 	public static final int HEIGHT = 140;
 	private double xPos;
-	private double yPos = (Pong.frameHeight / 2) - (HEIGHT / 2);
+	private double yPos = (Pong.fieldHeight / 2) - (HEIGHT / 2);
 
 	private int speed = Pong.BAR_SPEED;
 
@@ -27,7 +27,7 @@ public final class Bar implements GameElement {
 
 	public void moveDown() {
 		for (int i = 0; i < speed; i++) {
-			if (yPos < Pong.frameHeight - HEIGHT) {
+			if (yPos < Pong.fieldHeight - HEIGHT) {
 				yPos++;
 			} else {
 				break;

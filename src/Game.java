@@ -15,7 +15,9 @@ public final class Game {
 	private boolean isSPressed;
 	private boolean isUpPressed;
 	private boolean isDownPressed;
-	private boolean isF3Pressed = false;
+	private boolean isF3Pressed = false; // FPS
+	private boolean isF2Pressed = false; // debug
+
 
 	private int fps = 120;
 	private int frameCount = 0;
@@ -141,6 +143,7 @@ public final class Game {
 	}
 
 	public void reset() {
+		ball.setFirstMove();
 		ball.resetDirectionAndPosition();
 		score.reset();
 	}
@@ -167,6 +170,16 @@ public final class Game {
 		} else {
 			isF3Pressed = false;
 			dp.setInfo("");
+		}
+	}
+	
+	public void showDebugInfo() {
+		if(!isF2Pressed) {
+			isF2Pressed = true;
+			dp.setDebug(isF2Pressed);
+		} else {
+			isF2Pressed = false;
+			dp.setDebug(isF2Pressed);
 		}
 	}
 

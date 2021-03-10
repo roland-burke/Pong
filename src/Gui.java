@@ -1,4 +1,3 @@
-import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -8,12 +7,14 @@ public class Gui extends JFrame {
 	private static final long serialVersionUID = 1L;
 	
 	private Game game;
+	private final int frameHeight = 1000;
+	public final int frameWidth = 1400;
 	
 	public Gui(String name, Game game, DrawPanel dp) {
 		this.game = game;
 		
 		this.setTitle(name);
-		this.setSize(Pong.frameWidth, Pong.frameHeight);
+		this.setSize(frameWidth, frameHeight);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.add(dp);
@@ -46,6 +47,9 @@ public class Gui extends JFrame {
 					break;
 				case KeyEvent.VK_F3:
 					game.showFps();
+					break;
+				case KeyEvent.VK_F2:
+					game.showDebugInfo();
 					break;
 				}
 			}
