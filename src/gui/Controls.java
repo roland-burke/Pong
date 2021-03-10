@@ -19,12 +19,14 @@ public class Controls extends JFrame {
 	private JButton exitControlsButton;
 	private JPanel panel;
 	private JPanel buttonPanel = new JPanel(new FlowLayout());
-	private JLabel label1 = new JLabel("Player 1: W, S");
-	private JLabel label2 = new JLabel("Player 2: UP, DOWN");
-	private JLabel label3 = new JLabel("Pause: P");
-	private JLabel label4 = new JLabel("Restart: R");
-	private JLabel label5 = new JLabel("Debug info: F2");
-	private JLabel label6 = new JLabel("Show FPS: F3");
+	private JLabel label1 = new JLabel("Player 1 Move: W, S");
+	private JLabel label2 = new JLabel("Player 1 Shoot: SPACE");
+	private JLabel label3 = new JLabel("Player 2 Move: UP, DOWN");
+	private JLabel label4 = new JLabel("Player 2 Shoot: ENTER");
+	private JLabel label5 = new JLabel("Pause: P");
+	private JLabel label6 = new JLabel("Restart: R");
+	private JLabel label7 = new JLabel("Debug info: F2");
+	private JLabel label8 = new JLabel("Show FPS: F3");
 
 
 	public Controls() {
@@ -53,13 +55,14 @@ public class Controls extends JFrame {
 	}
 	
 	private void setupLabels() {
-	
 		panel.add(label1);
 		panel.add(label2);
 		panel.add(label3);
 		panel.add(label4);
 		panel.add(label5);
 		panel.add(label6);
+		panel.add(label7);
+		panel.add(label8);
 	}
 	
 	private void setupExitButton() {

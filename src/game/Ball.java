@@ -68,6 +68,7 @@ public final class Ball implements GameElement {
 		resetDirectionAndPosition();
 	}
 
+	@Override
 	public double[][] getHitBox() {
 		return ballHitBox;
 	}
@@ -100,10 +101,12 @@ public final class Ball implements GameElement {
 		directionVector = CollisionDetection.matrixMult(rotationMatrix, directionVector);
 	}
 
+	@Override
 	public double getXPos() {
 		return this.xPos;
 	}
 
+	@Override
 	public double getYPos() {
 		return this.yPos;
 	}

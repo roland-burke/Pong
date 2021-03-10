@@ -9,6 +9,7 @@ public final class Pong {
 	// Game settings
 	public final static double BALL_SPEED = 20; //20
 	public final static int BAR_SPEED = 28; //28
+	public final static int PROJECTILE_SPEED = 22;
 	public final static int WINNING_SCORE = 10; //20
 	
 	
@@ -21,8 +22,8 @@ public final class Pong {
 	private static final int RIGHT_BAR_INITIAL_Y_POS = Pong.getBarInitialYPos();
 	
 	public static void main(String[] args) {
-		Player player1 = new Player("Player 1");
-		Player player2 = new Player("Player 2");
+		Player player1 = new Player("Player 1", PlayerEnum.Player1);
+		Player player2 = new Player("Player 2", PlayerEnum.Player2);
 		
 		Bar leftBar = new Bar(LEFT_BAR_X_POS, LEFT_BAR_INITIAL_Y_POS);
 		Bar rightBar = new Bar(RIGHT_BAR_X_POS, RIGHT_BAR_INITIAL_Y_POS);
@@ -30,7 +31,7 @@ public final class Pong {
 		ScoreBoard scoreBoard = new ScoreBoard(player1, player2);
 		
 		DrawPanel dp = new DrawPanel(ball, leftBar, rightBar, scoreBoard);
-		Game game = new Game(ball, leftBar, rightBar, scoreBoard, dp);
+		Game game = new Game(ball, leftBar, rightBar, scoreBoard, dp, player1, player2);
 		new MainMenu("Pong - Main Menu", game, dp, ball);
 	}
 	

@@ -23,11 +23,6 @@ public final class ScoreBoard {
 		return true;
 	}
 	
-	public void reset() {
-		player1.resetScore();
-		player2.resetScore();
-	}
-	
 	public boolean checkForWinner() {
 		if(player1.getScore() >= winningScore) {
 			winningPlayer = player1;

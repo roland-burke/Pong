@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 
 import game.DrawPanel;
 import game.Game;
+import game.PlayerEnum;
 
 public class Gui extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -44,11 +45,17 @@ public class Gui extends JFrame {
 				case KeyEvent.VK_S:
 					game.setIsSPRessed(false);
 					break;
+				case KeyEvent.VK_SPACE: // Shoot
+					game.shoot(PlayerEnum.Player1);
+					break;
 				case KeyEvent.VK_UP:
 					game.setIsUPPRessed(false);
 					break;
 				case KeyEvent.VK_DOWN:
 					game.setIsDownPRessed(false);
+					break;
+				case KeyEvent.VK_ENTER:
+					game.shoot(PlayerEnum.Player2);
 					break;
 				case KeyEvent.VK_F3:
 					game.showFps();

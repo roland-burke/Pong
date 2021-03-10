@@ -6,7 +6,7 @@ public final class Game {
 	private ScoreBoard score;
 	private Ball ball;
 	private DrawPanel dp;
-	
+
 	private Thread loop;
 
 	private boolean running = false;
@@ -19,17 +19,22 @@ public final class Game {
 	private boolean isF3Pressed = false; // FPS
 	private boolean isF2Pressed = false; // debug
 
+	private Player player1;
+	private Player player2;
+	private Projectile projectiles[] = new Projectile[Player.MAX_AMMO * 2];
+	private int projectileCounter = 0;
 
 	private int fps = 120;
 	private int frameCount = 0;
-	
-	
-	public Game(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard score, DrawPanel dp) {
+
+	public Game(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard score, DrawPanel dp, Player player1, Player player2) {
 		this.dp = dp;
 		this.leftBar = leftBar;
 		this.rightBar = rightBar;
 		this.ball = ball;
 		this.score = score;
+		this.player1 = player1;
+		this.player2 = player2;
 	}
 
 	private void runGame() {
@@ -47,14 +52,14 @@ public final class Game {
 
 		final double TARGET_FPS = 120;
 		final double TARGET_TIME_BETWEEN_RENDERS = 1000000000 / TARGET_FPS;
-		
+
 		// Simple way of finding FPS.
 		int lastSecondTime = (int) (lastUpdateTime / 1000000000);
 
 		while (running) {
 			double now = System.nanoTime();
 			int updateCount = 0;
-			
+
 			if (!paused) {
 				// Do as many game updates as we need to, potentially playing catchup.
 				while (now - lastUpdateTime > TIME_BETWEEN_UPDATES && updateCount < MAX_UPDATES_BEFORE_RENDER) {
@@ -118,7 +123,7 @@ public final class Game {
 	}
 
 	public void pause() {
-		if(paused) {
+		if (paused) {
 			this.paused = false;
 		} else {
 			this.paused = true;
@@ -127,6 +132,14 @@ public final class Game {
 
 	private void tick() {
 		dp.setInfo("FPS: " + fps);
+		for (Projectile p : projectiles) {
+			if (p != null) {
+				if (!p.move()) {
+					p = null;
+					this.dp.setProjectiles(projectiles);
+				}
+			}
+		}
 		ball.move(leftBar, rightBar);
 		if (score.updateScore(ball.getHitBox())) {
 			ball.resetDirectionAndPosition();
@@ -140,14 +153,19 @@ public final class Game {
 
 	private void render(float interpolation) {
 		frameCount++;
-		//dp.setInterpolation(interpolation);
+		// dp.setInterpolation(interpolation);
 		dp.repaint();
 	}
 
 	public void reset() {
 		ball.setFirstMove();
 		ball.resetDirectionAndPosition();
-		score.reset();
+		player1.reset();
+		player2.reset();
+		projectiles = new Projectile[Player.MAX_AMMO * 2];
+		projectileCounter = 0;
+		dp.setProjectiles(null);
+		
 	}
 
 	public void moveBars() {
@@ -164,18 +182,32 @@ public final class Game {
 			rightBar.moveDown();
 		}
 	}
-	
+
+	public void shoot(PlayerEnum player) {
+		if (player == PlayerEnum.Player1) {
+			if (player1.shoot()) {
+				projectiles[projectileCounter++] = new Projectile(player, leftBar);
+				dp.setProjectiles(projectiles);
+			}
+		} else {
+			if (player2.shoot()) {
+				projectiles[projectileCounter++] = new Projectile(player, rightBar);
+				dp.setProjectiles(projectiles);
+			}
+		}
+	}
+
 	public void showFps() {
-		if(!isF3Pressed) {
+		if (!isF3Pressed) {
 			isF3Pressed = true;
 		} else {
 			isF3Pressed = false;
 		}
 		dp.setFps(isF3Pressed);
 	}
-	
+
 	public void showDebugInfo() {
-		if(!isF2Pressed) {
+		if (!isF2Pressed) {
 			isF2Pressed = true;
 		} else {
 			isF2Pressed = false;

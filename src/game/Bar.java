@@ -39,6 +39,7 @@ public final class Bar implements GameElement {
 		this.xPos = xPos;
 	}
 
+	@Override
 	public double[][] getHitBox() {
 		hitBox[0][0] = xPos;
 		hitBox[0][1] = xPos + WIDTH;
@@ -46,11 +47,13 @@ public final class Bar implements GameElement {
 		hitBox[1][1] = yPos + HEIGHT;
 		return hitBox;
 	}
-
+	
+	@Override
 	public double getXPos() {
 		return this.xPos;
 	}
 
+	@Override
 	public double getYPos() {
 		return this.yPos;
 	}
