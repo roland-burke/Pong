@@ -140,6 +140,7 @@ public class MainMenu extends JFrame {
 			@Override
 			public void run() {
 				ball.startBall();
+				dp.setReadyFalse();
 			}
 		}, 3000);
 		

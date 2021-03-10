@@ -26,12 +26,14 @@ public final class DrawPanel extends JPanel {
 	private String info = "";
 	private boolean debug = false;
 	private boolean fps = false;
+	private boolean ready = true;
 	
 	private final Color BAR_COLOR = new Color(200, 21, 0); // red
 	private final Color BALL_COLOR = new Color(180, 180, 180); // gray
 	private final Color PLAYER_COLOR = new Color(180, 180, 180); // gray
 	private final Color WINNER_COLOR = new Color(180, 255, 0); // green
 	private final Color BACK_COLOR = new Color(50, 50, 120); // darkblue
+	private final Color READY_COLOR = new Color(240, 156, 22); // orange
 	
 	private final Font SCORE_FONT = new Font("Arial", Font.PLAIN, 45);
 	private final Font WINNER_FONT = new Font("Arial", Font.PLAIN, 100);
@@ -68,6 +70,9 @@ public final class DrawPanel extends JPanel {
 		drawBars(g2d);
 		drawBall(g2d);
 		drawScoreBoard(g2d);
+		if(ready) {
+			drawReady(g2d);
+		}
 		if(fps) {
 			drawFPS(g2d);			
 		}
@@ -104,7 +109,7 @@ public final class DrawPanel extends JPanel {
 	
 	private void drawPlayerNames(Graphics2D g2d) {
 		drawString(g2d, scoreboard.getPlayer1Name(), 100, 30, PLAYER_COLOR, PLAYER_FONT);
-		drawString(g2d, scoreboard.getPlayer2Name(), getWidth() - 180, 30, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getPlayer2Name(), getWidth() - 210, 30, PLAYER_COLOR, PLAYER_FONT);
 	}
 	
 	private void drawBars(Graphics2D g2d) {
@@ -131,18 +136,22 @@ public final class DrawPanel extends JPanel {
 		drawString(g2d, winner, winnerX, winnerY, WINNER_COLOR, WINNER_FONT);
 	}
 	
+	private void drawReady(Graphics2D g2d) {
+		drawString(g2d, "Get Ready!", getWidth() / 2 - 250, getHeight() / 2 - 200, READY_COLOR, WINNER_FONT);
+	}
+	
 	private void drawFPS(Graphics2D g2d) {
-		drawString(g2d, info, 1250, 950, Color.WHITE, FPS_FONT);
+		drawString(g2d, info, 1200, 920, Color.WHITE, FPS_FONT);
 	}
 	
 	private void drawDebug(Graphics2D g2d) {
 		g2d.setStroke(new BasicStroke(1));
-		int xpos = 70;
-		drawString(g2d, "frame height: " + getHeight(), xpos, 820, Color.WHITE, FPS_FONT);
-		drawString(g2d, "frame width: " + getWidth(), xpos, 840, Color.WHITE, FPS_FONT);
-		drawString(g2d, "ball (top left) x: " + ball.getXPos() + ", y: " + ball.getXPos(), xpos, 860, Color.WHITE, FPS_FONT);
-		drawString(g2d, "left bar (top left) x: " + leftBar.getXPos() + ", y: " + leftBar.getYPos(), xpos, 880, Color.WHITE, FPS_FONT);
-		drawString(g2d, "right bar (top left) x: " + rightBar.getXPos() + ", y: " + rightBar.getYPos(), xpos, 900, Color.WHITE, FPS_FONT);
+		int xpos = 80;
+		drawString(g2d, "frame height: " + getHeight(), xpos, 840, Color.WHITE, FPS_FONT);
+		drawString(g2d, "frame width: " + getWidth(), xpos, 860, Color.WHITE, FPS_FONT);
+		drawString(g2d, "ball (top left) x: " + ball.getXPos() + ", y: " + ball.getXPos(), xpos, 880, Color.WHITE, FPS_FONT);
+		drawString(g2d, "left bar (top left) x: " + leftBar.getXPos() + ", y: " + leftBar.getYPos(), xpos, 900, Color.WHITE, FPS_FONT);
+		drawString(g2d, "right bar (top left) x: " + rightBar.getXPos() + ", y: " + rightBar.getYPos(), xpos, 920, Color.WHITE, FPS_FONT);
 	}
 	
 	private void drawString(Graphics2D g2d, String text, int xPos, int yPos, Color color, Font font) {
@@ -168,6 +177,10 @@ public final class DrawPanel extends JPanel {
 	
 	public void setInfo(String info) {
 		this.info = info;
+	}
+	
+	public void setReadyFalse() {
+		this.ready = false;
 	}
 	
 	public void setDebug(boolean debug) {
