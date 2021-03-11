@@ -38,7 +38,7 @@ public final class StaticDrawPanel extends JPanel {
 	private final Font SCORE_FONT = new Font("Arial", Font.PLAIN, 45);
 	private final Font WINNER_FONT = new Font("Arial", Font.PLAIN, 100);
 	private final Font FPS_FONT = new Font("Arial", Font.PLAIN, 20);
-	private final Font PLAYER_FONT = new Font("Arial", Font.PLAIN, 26);
+	private final Font PLAYER_FONT = new Font("Arial", Font.PLAIN, 25);
 	
 	private final Stroke MIDDLELINE_STROKE = new BasicStroke(2);
 	
@@ -102,8 +102,8 @@ public final class StaticDrawPanel extends JPanel {
 	private void drawPlayerStats(Graphics2D g2d) {
 		int player1xPos = 120;
 		int player2xPos = getWidth() - 280;
-		drawString(g2d, scoreboard.getPlayer1Name() + player1.getLifeString(), player1xPos, 25, PLAYER_COLOR, PLAYER_FONT);
-		drawString(g2d, scoreboard.getPlayer2Name() + player2.getLifeString(), player2xPos, 25, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getPlayer1Name() + player1.getLifeString(), player1xPos, 24, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getPlayer2Name() + player2.getLifeString(), player2xPos, 24, PLAYER_COLOR, PLAYER_FONT);
 		
 		drawString(g2d, "Ammo: " + player1.getAmmoString(), player1xPos, 50, PLAYER_COLOR, PLAYER_FONT);
 		drawString(g2d, "Ammo: " + player2.getAmmoString(), player2xPos, 50, PLAYER_COLOR, PLAYER_FONT);

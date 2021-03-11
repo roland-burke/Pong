@@ -56,7 +56,7 @@ public class Player {
 	}
 	
 	public String getAmmoString() {
-		return String.valueOf(this.ammunition);
+		return String.valueOf(this.ammunition) + "/" + MAX_AMMO;
 	}
 
 }

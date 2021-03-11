@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.CompoundBorder;
-import javax.swing.plaf.basic.BasicBorders;
 
 import game.Ball;
 import game.StaticDrawPanel;
