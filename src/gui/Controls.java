@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 public class Controls extends JFrame {
 	private static final long serialVersionUID = 1L;
 
-	private int frameHeight = 200;
-	private int frameWidth = 400;
+	private int frameHeight = 280;
+	private int frameWidth = 380;
 
 	private JButton exitControlsButton;
 	private JPanel panel;
@@ -57,8 +57,10 @@ public class Controls extends JFrame {
 	private void setupLabels() {
 		panel.add(label1);
 		panel.add(label2);
+		panel.add(new JLabel(" "));
 		panel.add(label3);
 		panel.add(label4);
+		panel.add(new JLabel(" "));
 		panel.add(label5);
 		panel.add(label6);
 		panel.add(label7);

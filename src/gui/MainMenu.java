@@ -2,14 +2,20 @@ package gui;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Timer;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.CompoundBorder;
+import javax.swing.plaf.basic.BasicBorders;
 
 import game.Ball;
 import game.DrawPanel;
@@ -21,6 +27,8 @@ public class MainMenu extends JFrame {
 	private int frameHeight = 400;
 	private int frameWidth = 600;
 	public static final Color background = new Color(186, 204, 245);
+	private final int topSpace = 30;
+	private final int space = 15;
 
 	private JButton startGameButton;
 	private JButton exitGameButton;
@@ -57,31 +65,40 @@ public class MainMenu extends JFrame {
 		this.setupSinglePlayerButton();
 		this.setupControlsButton();
 		this.setupExitButton();
+		
+		JButton[] buttons = {startGameButton, exitGameButton, singlePlayerButton, controlsButton};
+		
+		for (JButton b : buttons) {
+			b.setBackground(new Color(59, 89, 182));
+			b.setForeground(Color.WHITE);
+			b.setFocusPainted(false);
+			b.setFont(new Font("Tahoma", Font.BOLD, 18));
+			b.setAlignmentX(Component.CENTER_ALIGNMENT);
+		}
 
+		CompoundBorder border = BorderFactory.createCompoundBorder(BorderFactory.createEmptyBorder(topSpace, 80, 80, 80), BorderFactory.createLineBorder(Color.WHITE, 3, true));
+		panel.setBorder(border);
+		
 		getContentPane().add(panel, BorderLayout.CENTER);
 	}
 
 	private void setupStartGameButton() {
 		startGameButton = new JButton();
-		startGameButton.setSize(200, 50);
 		startGameButton.setText("Start Game");
-		startGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		startGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				startGame();
 			}
 		});
-
+		panel.add(Box.createRigidArea(new Dimension(0, topSpace)));
 		panel.add(startGameButton);
 		startGameButton.setVisible(true);
 	}
 	
 	private void setupSinglePlayerButton() {
 		singlePlayerButton = new JButton();
-		singlePlayerButton.setSize(200, 50);
 		singlePlayerButton.setText("Start Game (Singleplayer)");
-		singlePlayerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		singlePlayerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -89,15 +106,14 @@ public class MainMenu extends JFrame {
 			}
 		});
 
+		panel.add(Box.createRigidArea(new Dimension(0, space)));
 		panel.add(singlePlayerButton);
 		startGameButton.setVisible(true);
 	}
 	
 	private void setupControlsButton() {
 		controlsButton = new JButton();
-		controlsButton.setSize(200, 50);
 		controlsButton.setText("Controls");
-		controlsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -105,15 +121,14 @@ public class MainMenu extends JFrame {
 			}
 		});
 
+		panel.add(Box.createRigidArea(new Dimension(0, space)));
 		panel.add(controlsButton);
 		startGameButton.setVisible(true);
 	}
 
 	private void setupExitButton() {
 		exitGameButton = new JButton();
-		exitGameButton.setSize(200, 50);
 		exitGameButton.setText("Exit Game");
-		exitGameButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 		exitGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -121,6 +136,7 @@ public class MainMenu extends JFrame {
 			}
 		});
 
+		panel.add(Box.createRigidArea(new Dimension(0, space)));
 		panel.add(exitGameButton);
 		exitGameButton.setVisible(true);
 	}
