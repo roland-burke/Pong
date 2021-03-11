@@ -30,9 +30,10 @@ public final class Pong {
 		Ball ball = new Ball();
 		ScoreBoard scoreBoard = new ScoreBoard(player1, player2);
 		
-		DrawPanel dp = new DrawPanel(ball, leftBar, rightBar, scoreBoard);
-		Game game = new Game(ball, leftBar, rightBar, scoreBoard, dp, player1, player2);
-		new MainMenu("Pong - Main Menu", game, dp, ball);
+		StaticDrawPanel dp = new StaticDrawPanel(ball, leftBar, rightBar, scoreBoard, player1, player2);
+		ElementsDrawPanel edp = new ElementsDrawPanel(ball, leftBar, rightBar);
+		Game game = new Game(ball, leftBar, rightBar, scoreBoard, dp, edp, player1, player2);
+		new MainMenu("Pong - Main Menu", game, dp, edp, ball);
 	}
 	
 	private static int getBarInitialYPos() {

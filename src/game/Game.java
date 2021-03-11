@@ -5,7 +5,8 @@ public final class Game {
 	private Bar rightBar;
 	private ScoreBoard score;
 	private Ball ball;
-	private DrawPanel dp;
+	private StaticDrawPanel dp;
+	private ElementsDrawPanel edp;
 
 	private Thread loop;
 
@@ -27,8 +28,9 @@ public final class Game {
 	private int fps = 120;
 	private int frameCount = 0;
 
-	public Game(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard score, DrawPanel dp, Player player1, Player player2) {
+	public Game(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard score, StaticDrawPanel dp, ElementsDrawPanel edp, Player player1, Player player2) {
 		this.dp = dp;
+		this.edp = edp;
 		this.leftBar = leftBar;
 		this.rightBar = rightBar;
 		this.ball = ball;
@@ -102,7 +104,7 @@ public final class Game {
 					// FYI on some OS's this can cause pretty bad stuttering. Scroll down and have a
 					// look at different peoples' solutions to this.
 					try {
-						Thread.sleep(1);
+						//Thread.sleep(1);
 					} catch (Exception e) {
 					}
 
@@ -136,7 +138,7 @@ public final class Game {
 			if (p != null) {
 				if (!p.move()) {
 					p = null;
-					this.dp.setProjectiles(projectiles);
+					this.edp.setProjectiles(projectiles);
 				}
 			}
 		}
@@ -154,7 +156,7 @@ public final class Game {
 	private void render(float interpolation) {
 		frameCount++;
 		// dp.setInterpolation(interpolation);
-		dp.repaint();
+		edp.repaint();
 	}
 
 	public void reset() {
@@ -164,7 +166,7 @@ public final class Game {
 		player2.reset();
 		projectiles = new Projectile[Player.MAX_AMMO * 2];
 		projectileCounter = 0;
-		dp.setProjectiles(null);
+		edp.setProjectiles(null);
 		
 	}
 
@@ -187,12 +189,12 @@ public final class Game {
 		if (player == PlayerEnum.Player1) {
 			if (player1.shoot()) {
 				projectiles[projectileCounter++] = new Projectile(player, leftBar);
-				dp.setProjectiles(projectiles);
+				edp.setProjectiles(projectiles);
 			}
 		} else {
 			if (player2.shoot()) {
 				projectiles[projectileCounter++] = new Projectile(player, rightBar);
-				dp.setProjectiles(projectiles);
+				edp.setProjectiles(projectiles);
 			}
 		}
 	}

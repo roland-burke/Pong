@@ -5,7 +5,8 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
-import game.DrawPanel;
+import game.StaticDrawPanel;
+import game.ElementsDrawPanel;
 import game.Game;
 import game.PlayerEnum;
 
@@ -16,7 +17,7 @@ public class Gui extends JFrame {
 	private final int frameHeight = 1000;
 	public final int frameWidth = 1400;
 	
-	public Gui(String name, Game game, DrawPanel dp) {
+	public Gui(String name, Game game, StaticDrawPanel dp, ElementsDrawPanel edp) {
 		this.game = game;
 		
 		this.setTitle(name);
@@ -24,7 +25,10 @@ public class Gui extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.add(dp);
+		this.setGlassPane(edp);
+		edp.setVisible(true);
 		this.addKeyListener(getKeylistener());
+		
 		this.setVisible(true);
 	}
 	

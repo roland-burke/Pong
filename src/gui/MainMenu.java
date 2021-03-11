@@ -18,7 +18,8 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.plaf.basic.BasicBorders;
 
 import game.Ball;
-import game.DrawPanel;
+import game.StaticDrawPanel;
+import game.ElementsDrawPanel;
 import game.Game;
 
 public class MainMenu extends JFrame {
@@ -37,12 +38,14 @@ public class MainMenu extends JFrame {
 	private JPanel panel;
 
 	private Game game;
-	private DrawPanel dp;
+	private StaticDrawPanel dp;
+	private ElementsDrawPanel edp;
 	private Ball ball;
 
-	public MainMenu(String name, Game game, DrawPanel dp, Ball ball) {
+	public MainMenu(String name, Game game, StaticDrawPanel dp, ElementsDrawPanel edp, Ball ball) {
 		this.game = game;
 		this.dp = dp;
+		this.edp = edp;
 		this.ball = ball;
 
 		this.setTitle(name);
@@ -149,7 +152,7 @@ public class MainMenu extends JFrame {
 	private void startGame() {
 		this.setVisible(false);
 		this.dispose();
-		new Gui("Pong", game, dp);
+		new Gui("Pong", game, dp, edp);
 		game.start();
 		
 		new Timer().schedule(new java.util.TimerTask() {

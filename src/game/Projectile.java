@@ -31,7 +31,7 @@ public class Projectile implements GameElement {
 				return true;
 			}
 		} else {
-			if(this.xPos > 0) {
+			if(this.xPos > -WIDTH) {
 				this.xPos -= speed;
 				return true;
 			}

@@ -11,14 +11,15 @@ import java.awt.Stroke;
 
 import javax.swing.JPanel;
 
-public final class DrawPanel extends JPanel {
+public final class StaticDrawPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Ball ball;
 	private Bar leftBar;
 	private Bar rightBar;
 	private ScoreBoard scoreboard;
-	private Projectile projectiles[] = null;
+	private Player player1;
+	private Player player2;
 	
 	private int winnerX = 1500;
 	private int winnerY = 1500;
@@ -29,27 +30,26 @@ public final class DrawPanel extends JPanel {
 	private boolean fps = false;
 	private boolean ready = true;
 	
-	private final Color BAR_COLOR = new Color(200, 21, 0); // red
-	private final Color BALL_COLOR = new Color(180, 180, 180); // gray
 	private final Color PLAYER_COLOR = new Color(180, 180, 180); // gray
 	private final Color WINNER_COLOR = new Color(180, 255, 0); // green
 	private final Color BACK_COLOR = new Color(50, 50, 120); // darkblue
 	private final Color READY_COLOR = new Color(240, 156, 22); // orange
-	private final Color PROJECTILE_COLOR = new Color(255, 229, 36); // orange
 	
 	private final Font SCORE_FONT = new Font("Arial", Font.PLAIN, 45);
 	private final Font WINNER_FONT = new Font("Arial", Font.PLAIN, 100);
 	private final Font FPS_FONT = new Font("Arial", Font.PLAIN, 20);
-	private final Font PLAYER_FONT = new Font("Arial", Font.PLAIN, 30);
+	private final Font PLAYER_FONT = new Font("Arial", Font.PLAIN, 26);
 	
 	private final Stroke MIDDLELINE_STROKE = new BasicStroke(2);
 	
 
-	public DrawPanel(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard scoreBoard) {
+	public StaticDrawPanel(Ball ball, Bar leftBar, Bar rightBar, ScoreBoard scoreBoard, Player player1, Player player2) {
 		this.ball = ball;
 		this.leftBar = leftBar;
 		this.rightBar = rightBar;
 		this.scoreboard = scoreBoard;
+		this.player1 = player1;
+		this.player2 = player2;
 		setBackground(BACK_COLOR);
 	}
 	
@@ -66,19 +66,9 @@ public final class DrawPanel extends JPanel {
 			drawWinner(g2d);
 		}
 		
-		updateValues();
 		drawGameBackground(g2d);
-		drawPlayerNames(g2d);
-		drawBars(g2d);
-		drawBall(g2d);
+		drawPlayerStats(g2d);
 		drawScoreBoard(g2d);
-		if(projectiles != null) {
-			for (Projectile p : projectiles) {
-				if(p != null) {
-					drawProjectile(g2d, p);					
-				}
-			}
-		}
 		if(ready) {
 			drawReady(g2d);
 		}
@@ -89,13 +79,6 @@ public final class DrawPanel extends JPanel {
 			drawDebug(g2d);
 		}
 		
-	}
-	
-	private void updateValues() {
-		double rightBarXPos = getWidth() - Pong.LEFT_BAR_X_POS - rightBar.getWidth();
-		rightBar.setXPos(rightBarXPos);
-		Pong.fieldWidth = getWidth();
-		Pong.setFrameHeight(getHeight());
 	}
 	
 	private void drawGameBackground(Graphics2D g2d) {
@@ -116,34 +99,19 @@ public final class DrawPanel extends JPanel {
 		g2d.drawLine((int) getWidth() / 2, 0, getWidth() / 2, getHeight());
 	}
 	
-	private void drawPlayerNames(Graphics2D g2d) {
-		drawString(g2d, scoreboard.getPlayer1Name(), 100, 30, PLAYER_COLOR, PLAYER_FONT);
-		drawString(g2d, scoreboard.getPlayer2Name(), getWidth() - 210, 30, PLAYER_COLOR, PLAYER_FONT);
-	}
-	
-	private void drawBars(Graphics2D g2d) {
-		g2d.setColor(BAR_COLOR);
-		g2d.fillRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // left bar
-		g2d.fillRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // right bar
+	private void drawPlayerStats(Graphics2D g2d) {
+		int player1xPos = 120;
+		int player2xPos = getWidth() - 280;
+		drawString(g2d, scoreboard.getPlayer1Name() + player1.getLifeString(), player1xPos, 25, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, scoreboard.getPlayer2Name() + player2.getLifeString(), player2xPos, 25, PLAYER_COLOR, PLAYER_FONT);
 		
-		g2d.setColor(Color.BLACK);
-		g2d.drawRect((int) leftBar.getXPos(), (int) leftBar.getYPos(), (int) leftBar.getWidth(), (int) leftBar.getHeight()); // left bar
-		g2d.drawRect((int) rightBar.getXPos(), (int) rightBar.getYPos(), (int) rightBar.getWidth(), (int) rightBar.getHeight()); // right bar
-	}
-	
-	private void drawBall(Graphics2D g2d) {
-		g2d.setColor(BALL_COLOR);
-		g2d.fillOval((int) ball.getXPos(), (int) ball.getYPos(), 40, 40); // Ball
+		drawString(g2d, "Ammo: " + player1.getAmmoString(), player1xPos, 50, PLAYER_COLOR, PLAYER_FONT);
+		drawString(g2d, "Ammo: " + player2.getAmmoString(), player2xPos, 50, PLAYER_COLOR, PLAYER_FONT);
 	}
 	
 	private void drawScoreBoard(Graphics2D g2d) {
 		FontMetrics metrics = g2d.getFontMetrics(SCORE_FONT);
 		drawString(g2d, scoreboard.getScoreBoard(), (getWidth() / 2) - (metrics.stringWidth(scoreboard.getScoreBoard()) / 2), 50, PLAYER_COLOR, SCORE_FONT);
-	}
-	
-	private void drawProjectile(Graphics2D g2d, Projectile p) {
-		g2d.setColor(PROJECTILE_COLOR);
-		g2d.fillRect((int) p.getXPos(), (int) p.getYPos(), (int) p.getWidth(), (int) p.getHeight());
 	}
 	
 	private void drawWinner(Graphics2D g2d) {
@@ -203,10 +171,6 @@ public final class DrawPanel extends JPanel {
 	
 	public void setFps(boolean fps) {
 		this.fps = fps;
-	}
-	
-	public void setProjectiles(Projectile[] projectiles) {
-		this.projectiles = projectiles;
 	}
 }
 
