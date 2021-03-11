@@ -5,10 +5,10 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 
+import Utils.PlayerEnum;
 import game.StaticDrawPanel;
 import game.ElementsDrawPanel;
 import game.Game;
-import game.PlayerEnum;
 
 public class Gui extends JFrame {
 	private static final long serialVersionUID = 1L;

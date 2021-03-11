@@ -1,5 +1,8 @@
 package game;
 
+import Utils.CollisionDetection;
+import Utils.PlayerEnum;
+
 public final class Game {
 	private Bar leftBar;
 	private Bar rightBar;
@@ -22,7 +25,7 @@ public final class Game {
 
 	private Player player1;
 	private Player player2;
-	private Projectile projectiles[] = new Projectile[Player.MAX_AMMO * 2];
+	private Projectile projectiles[] = new Projectile[Player.Max_Ammo * 2];
 	private int projectileCounter = 0;
 
 	private int fps = 120;
@@ -134,11 +137,21 @@ public final class Game {
 
 	private void tick() {
 		dp.setInfo("FPS: " + fps);
-		for (Projectile p : projectiles) {
-			if (p != null) {
-				if (!p.move()) {
-					p = null;
+		for(int i = 0; i < projectiles.length; i++) {
+			if (projectiles[i] != null) {
+				if (!projectiles[i].move()) {
+					projectiles[i] = null;
 					this.edp.setProjectiles(projectiles);
+				} else {
+					if(CollisionDetection.calculate1(rightBar, projectiles[i])) {
+						player2.damage();
+						projectiles[i].dissapear();
+					}
+					
+					if(CollisionDetection.calculate2(leftBar, projectiles[i])) {
+						player1.damage();
+						projectiles[i].dissapear();
+					}
 				}
 			}
 		}
@@ -164,7 +177,7 @@ public final class Game {
 		ball.resetDirectionAndPosition();
 		player1.reset();
 		player2.reset();
-		projectiles = new Projectile[Player.MAX_AMMO * 2];
+		projectiles = new Projectile[Player.Max_Ammo * 2];
 		projectileCounter = 0;
 		edp.setProjectiles(null);
 		

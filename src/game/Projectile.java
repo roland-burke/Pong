@@ -1,11 +1,14 @@
 package game;
 
+import Utils.PlayerEnum;
+
 public class Projectile implements GameElement {
 
 	public final int WIDTH = 40;
 	public final int HEIGHT = 10;
 	private double xPos;
 	private double yPos;
+	private boolean exist = true;
 
 	private int speed = Pong.PROJECTILE_SPEED;
 
@@ -25,20 +28,35 @@ public class Projectile implements GameElement {
 	}
 
 	public boolean move() {
+		if(!exist) {
+			return exist;
+		}
 		if (origin == PlayerEnum.Player1) {
 			if(this.xPos < Pong.fieldWidth) {
-				this.xPos += speed;
+				for(int i = 0; i < speed; i++) {
+					this.xPos += 1;					
+				}
 				return true;
 			}
 		} else {
 			if(this.xPos > -WIDTH) {
-				this.xPos -= speed;
+				for(int i = 0; i < speed; i++) {
+					this.xPos -= 1;					
+				}
 				return true;
 			}
 		}
 		return false;
 	}
+	
+	public void dissapear() {
+		this.exist = false;
+	}
 
+	public PlayerEnum getOrigin() {
+		return this.origin;
+	}
+	
 	@Override
 	public double[][] getHitBox() {
 		return hitBox;

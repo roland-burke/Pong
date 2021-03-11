@@ -1,4 +1,5 @@
 package game;
+import Utils.PlayerEnum;
 import gui.MainMenu;
 
 public final class Pong {

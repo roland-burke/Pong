@@ -1,4 +1,4 @@
-package game;
+package Utils;
 
 public enum PlayerEnum {
 	Player1,

@@ -2,6 +2,8 @@ package game;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Utils.CollisionDetection;
+
 public final class Ball implements GameElement {
 	private Random r = new Random();
 	private int randomFactor = 16;

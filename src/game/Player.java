@@ -1,7 +1,10 @@
 package game;
 
+import Utils.PlayerEnum;
+
 public class Player {
-	public static int MAX_AMMO = 10;
+	public static int Max_Ammo = 10;
+	public static int Damage = 15;
 
 	private String name;
 	private int score;
@@ -15,7 +18,7 @@ public class Player {
 		this.whoAmI = whoAmI;
 		this.score = 0;
 		this.life = 100;
-		this.ammunition = Player.MAX_AMMO;
+		this.ammunition = Player.Max_Ammo;
 	}
 
 	public void score() {
@@ -24,7 +27,8 @@ public class Player {
 
 	public void reset() {
 		this.score = 0;
-		this.ammunition = Player.MAX_AMMO;
+		this.ammunition = Player.Max_Ammo;
+		this.life = 100;
 	}
 
 	public boolean shoot() {
@@ -34,7 +38,15 @@ public class Player {
 		}
 		return false;
 	}
-
+	
+	public void damage() {
+		this.life = this.life - Player.Damage;
+	}
+	
+	public PlayerEnum getWhoAmI() {
+		return this.whoAmI;
+	}
+	
 	public int getScore() {
 		return score;
 	}
@@ -56,7 +68,7 @@ public class Player {
 	}
 	
 	public String getAmmoString() {
-		return String.valueOf(this.ammunition) + "/" + MAX_AMMO;
+		return String.valueOf(this.ammunition) + "/" + Max_Ammo;
 	}
 
 }
