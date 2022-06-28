@@ -104,7 +104,7 @@ public class CollisionDetection {
 
 	public static double[][] matrixMult(double[][] A, double[][] B) {
 		if (A[0].length != B.length) {
-			System.err.println("Fehler! Matrizen können nicht multipliziert werden.");
+			System.err.println("Fehler! Matrizen koennen nicht multipliziert werden.");
 			double[][] C = { { 0 }, { 0 } };
 			return C;
 		}
